@@ -1,9 +1,8 @@
 import streamlit as st
 from PIL import Image
 import requests
-import io
 
-# ---------------- PAGE SETTINGS ----------------
+# PAGE SETTINGS
 st.set_page_config(
     page_title="AI Farming Assistant",
     page_icon="🌱",
@@ -11,34 +10,17 @@ st.set_page_config(
 )
 
 st.title("🌱 AI Farming Assistant")
-st.write("Upload a crop image to detect disease using AI.")
+st.write("Upload a crop image to detect possible disease.")
 
-# ---------------- HUGGING FACE API ----------------
+# HUGGING FACE API
 
 API_URL = "https://api-inference.huggingface.co/models/microsoft/resnet-50"
 
 headers = {
-    "Authorization": "Bearer YOUR_HUGGINGFACE_TOKEN"
+    "Authorization": "Bearer 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"
 }
 
-# ---------------- DISEASE INFO ----------------
-
-disease_info = {
-    "Tomato Early Blight": {
-        "cause": "Fungal infection caused by Alternaria solani.",
-        "solution": "Use fungicides and remove infected leaves."
-    },
-    "Tomato Late Blight": {
-        "cause": "Caused by Phytophthora infestans fungus.",
-        "solution": "Avoid excess moisture and spray fungicide."
-    },
-    "Healthy": {
-        "cause": "No disease detected.",
-        "solution": "Maintain proper watering and nutrition."
-    }
-}
-
-# ---------------- IMAGE UPLOAD ----------------
+# IMAGE UPLOAD
 
 uploaded_file = st.file_uploader(
     "Upload Crop Image",
@@ -62,41 +44,36 @@ if uploaded_file is not None:
                 headers=headers,
                 data=image_bytes
             )
+
             if response.status_code != 200:
-                st.error("API Error: " + response.text)
-                st.stop()
-            result = response.json()
+                st.error("API Error")
+                st.write(response.text)
 
-            try:
+            else:
+
+                result = response.json()
+
                 prediction = result[0]['label']
-confidence = result[0]['score']
+                confidence = result[0]['score']
 
-st.success(f"Prediction: {prediction}")
-st.info(f"Confidence: {confidence:.2f}")
-
-if "leaf" in prediction.lower():
-    st.subheader("Possible Cause")
-    st.write("The crop may be affected by a fungal or bacterial disease.")
-
-    st.subheader("Recommended Solution")
-    st.write("Remove infected leaves and use proper fungicide spray.")
-else:
-    st.subheader("Status")
-    st.write("Plant condition appears normal.")
-
-                st.success(f"Detected Disease: {disease}")
+                st.success(f"Prediction: {prediction}")
                 st.info(f"Confidence: {confidence:.2f}")
 
-                if disease in disease_info:
+                # SIMPLE AI ANALYSIS
 
-                    st.subheader("Cause")
-                    st.write(disease_info[disease]["cause"])
+                if "leaf" in prediction.lower():
 
-                    st.subheader("Solution")
-                    st.write(disease_info[disease]["solution"])
+                    st.subheader("Possible Cause")
+                    st.write(
+                        "The crop may be affected by fungal or bacterial infection."
+                    )
+
+                    st.subheader("Recommended Solution")
+                    st.write(
+                        "Remove infected leaves and spray proper fungicide."
+                    )
 
                 else:
-                    st.warning("Disease information not available.")
 
-            except:
-                st.error("Unable to detect disease. Try another image.")
+                    st.subheader("Plant Status")
+                    st.write("Plant appears mostly healthy.")
