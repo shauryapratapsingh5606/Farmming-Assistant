@@ -62,7 +62,9 @@ if uploaded_file is not None:
                 headers=headers,
                 data=image_bytes
             )
-
+            if response.status_code != 200:
+                st.error("API Error: " + response.text)
+                st.stop()
             result = response.json()
 
             try:
