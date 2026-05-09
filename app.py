@@ -19,8 +19,6 @@ API_URL = "https://router.huggingface.co/hf-inference/models/linkanjarad/mobilen
 headers = {
     "Authorization": "Bearer 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"
 }
-    
-}
 
 # IMAGE UPLOAD
 
