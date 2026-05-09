@@ -68,8 +68,21 @@ if uploaded_file is not None:
             result = response.json()
 
             try:
-                disease = result[0]['label']
-                confidence = result[0]['score']
+                prediction = result[0]['label']
+confidence = result[0]['score']
+
+st.success(f"Prediction: {prediction}")
+st.info(f"Confidence: {confidence:.2f}")
+
+if "leaf" in prediction.lower():
+    st.subheader("Possible Cause")
+    st.write("The crop may be affected by a fungal or bacterial disease.")
+
+    st.subheader("Recommended Solution")
+    st.write("Remove infected leaves and use proper fungicide spray.")
+else:
+    st.subheader("Status")
+    st.write("Plant condition appears normal.")
 
                 st.success(f"Detected Disease: {disease}")
                 st.info(f"Confidence: {confidence:.2f}")
