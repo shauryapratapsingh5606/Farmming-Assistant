@@ -15,7 +15,7 @@ st.write("Upload a crop image to detect disease using AI.")
 
 # ---------------- HUGGING FACE API ----------------
 
-API_URL = "https://api-inference.huggingface.co/models/dima806/plant-disease-image-detection"
+API_URL = "https://api-inference.huggingface.co/models/microsoft/resnet-50"
 
 headers = {
     "Authorization": "Bearer YOUR_HUGGINGFACE_TOKEN"
