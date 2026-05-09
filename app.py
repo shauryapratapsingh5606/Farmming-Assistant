@@ -1,118 +1,87 @@
 import streamlit as st
 from PIL import Image
-import random
+import requests
+import io
 
-# Page settings
+# ---------------- PAGE SETTINGS ----------------
 st.set_page_config(
-    page_title="Farming Assistant",
+    page_title="AI Farming Assistant",
     page_icon="🌱",
     layout="centered"
 )
 
-# Custom CSS
-st.markdown("""
-<style>
-.main {
-    background-color: #f5fff5;
+st.title("🌱 AI Farming Assistant")
+st.write("Upload a crop image to detect disease using AI.")
+
+# ---------------- HUGGING FACE API ----------------
+
+API_URL = "https://api-inference.huggingface.co/models/linkanjarad/mobilenet_v2_1.0_224-plant-disease-identification"
+
+headers = {
+    "Authorization": "Bearer YOUR_HUGGINGFACE_TOKEN"
 }
 
-.title {
-    text-align: center;
-    color: #2e7d32;
-    font-size: 42px;
-    font-weight: bold;
+# ---------------- DISEASE INFO ----------------
+
+disease_info = {
+    "Tomato Early Blight": {
+        "cause": "Fungal infection caused by Alternaria solani.",
+        "solution": "Use fungicides and remove infected leaves."
+    },
+    "Tomato Late Blight": {
+        "cause": "Caused by Phytophthora infestans fungus.",
+        "solution": "Avoid excess moisture and spray fungicide."
+    },
+    "Healthy": {
+        "cause": "No disease detected.",
+        "solution": "Maintain proper watering and nutrition."
+    }
 }
 
-.subtitle {
-    text-align: center;
-    color: #555;
-    font-size: 18px;
-    margin-bottom: 30px;
-}
+# ---------------- IMAGE UPLOAD ----------------
 
-.result-box {
-    padding: 20px;
-    border-radius: 15px;
-    background-color: #e8f5e9;
-    border: 2px solid #81c784;
-    margin-top: 20px;
-}
-</style>
-""", unsafe_allow_html=True)
-
-# Title
-st.markdown('<div class="title">🌾 Farming Assistant</div>', unsafe_allow_html=True)
-st.markdown('<div class="subtitle">AI Crop Disease Detection System</div>', unsafe_allow_html=True)
-
-# Upload image
 uploaded_file = st.file_uploader(
-    "📤 Upload Crop Image",
+    "Upload Crop Image",
     type=["jpg", "jpeg", "png"]
 )
 
-# Disease data
-diseases = [
-    {
-        "name": "Leaf Blight",
-        "cause": "Fungal infection caused by excessive humidity.",
-        "prevention": "Avoid overwatering and maintain proper airflow.",
-        "treatment": "Use copper-based fungicide spray."
-    },
-    {
-        "name": "Early Blight",
-        "cause": "Disease spreads due to infected soil and wet leaves.",
-        "prevention": "Rotate crops regularly and keep leaves dry.",
-        "treatment": "Apply organic fungicide every 7 days."
-    },
-    {
-        "name": "Bacterial Spot",
-        "cause": "Bacteria attack leaves during warm and wet conditions.",
-        "prevention": "Use disease-free seeds and avoid splashing water.",
-        "treatment": "Use antibacterial plant spray."
-    },
-    {
-        "name": "Healthy Plant",
-        "cause": "No disease detected.",
-        "prevention": "Continue proper irrigation and sunlight.",
-        "treatment": "No treatment required."
-    }
-]
-
-# Show uploaded image
 if uploaded_file is not None:
+
     image = Image.open(uploaded_file)
 
-    st.image(
-        image,
-        caption="🌿 Uploaded Crop Image",
-        use_container_width=True
-    )
+    st.image(image, caption="Uploaded Image", use_container_width=True)
 
-    # Button
-    if st.button("🔍 Detect Disease"):
+    if st.button("Detect Disease"):
 
-        result = random.choice(diseases)
+        with st.spinner("Detecting disease..."):
 
-        # Success message
-        st.success("✅ AI Analysis Completed Successfully")
+            image_bytes = uploaded_file.getvalue()
 
-        # Result Card
-        st.markdown(f"""
-        <div class="result-box">
+            response = requests.post(
+                API_URL,
+                headers=headers,
+                data=image_bytes
+            )
 
-        <h2>🦠 Disease: {result['name']}</h2>
+            result = response.json()
 
-        <h4>⚠ Cause</h4>
-        <p>{result['cause']}</p>
+            try:
+                disease = result[0]['label']
+                confidence = result[0]['score']
 
-        <h4>🛡 Prevention</h4>
-        <p>{result['prevention']}</p>
+                st.success(f"Detected Disease: {disease}")
+                st.info(f"Confidence: {confidence:.2f}")
 
-        <h4>💊 Treatment</h4>
-        <p>{result['treatment']}</p>
+                if disease in disease_info:
 
-        </div>
-        """, unsafe_allow_html=True)
+                    st.subheader("Cause")
+                    st.write(disease_info[disease]["cause"])
 
-else:
-    st.info("📷 Please upload a crop image to continue.")
+                    st.subheader("Solution")
+                    st.write(disease_info[disease]["solution"])
+
+                else:
+                    st.warning("Disease information not available.")
+
+            except:
+                st.error("Unable to detect disease. Try another image.")
