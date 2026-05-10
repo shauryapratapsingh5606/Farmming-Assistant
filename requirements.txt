@@ -2,3 +2,4 @@ streamlit
 pillow
 streamlit-mic-recorder
 google-generativeai
+geocoder
