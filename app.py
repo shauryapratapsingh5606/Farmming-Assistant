@@ -1,7 +1,6 @@
 import streamlit as st
 from PIL import Image
-import random
-from difflib import get_close_matches
+import requests
 from streamlit_mic_recorder import speech_to_text
 
 # PAGE SETTINGS
@@ -15,92 +14,89 @@ st.set_page_config(
 st.title("🌱 AI Farming Assistant")
 st.write("Upload a crop image to detect possible disease.")
 
+# HUGGING FACE API
+API_URL = "https://router.huggingface.co/hf-inference/models/linkanjarad/mobilenet_v2_1.0_224-plant-disease-identification"
+
+headers = {
+    "Authorization": "Bearer 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"
+}
+
 # IMAGE UPLOAD
 uploaded_file = st.file_uploader(
     "Upload Crop Image",
     type=["jpg", "jpeg", "png"]
 )
 
-# SHOW IMAGE
 if uploaded_file is not None:
+
     image = Image.open(uploaded_file)
-    st.image(image, caption="Uploaded Image", use_container_width=True)
 
-# DETECT DISEASE BUTTON
-if st.button("Detect Disease"):
+    st.image(
+        image,
+        caption="Uploaded Image",
+        use_container_width=True
+    )
 
-    diseases = [
-        {
-            "name": "Tomato Leaf Blight",
-            "cause": "Fungal infection caused by excess moisture.",
-            "solution": "Use fungicide and avoid overwatering."
-        },
-        {
-            "name": "Leaf Spot Disease",
-            "cause": "Bacterial infection due to humid weather.",
-            "solution": "Remove infected leaves and use copper spray."
-        },
-        {
-            "name": "Healthy Plant",
-            "cause": "No disease detected.",
-            "solution": "Maintain proper watering and sunlight."
-        }
-    ]
+    if st.button("Detect Disease"):
 
-    result = random.choice(diseases)
+        with st.spinner("Detecting disease..."):
 
-    st.success(f"🌿 Disease: {result['name']}")
-    st.warning(f"⚠ Cause: {result['cause']}")
-    st.info(f"💡 Solution: {result['solution']}")
+            image_bytes = uploaded_file.getvalue()
 
-     # ---------------- CHATBOT ----------------
+            response = requests.post(
+                API_URL,
+                headers=headers,
+                data=image_bytes
+            )
 
+            try:
+                result = response.json()
+
+                if isinstance(result, list):
+
+                    disease = result[0]['label']
+                    confidence = result[0]['score']
+
+                    st.success(f"Detected Disease: {disease}")
+
+                    st.info(
+                        f"Confidence Score: {round(confidence * 100, 2)}%"
+                    )
+
+                    # Disease Causes
+                    if "blight" in disease.lower():
+                        st.warning(
+                            "Cause: Fungal infection due to humidity and excess moisture."
+                        )
+
+                    elif "rust" in disease.lower():
+                        st.warning(
+                            "Cause: Rust fungus caused by wet conditions."
+                        )
+
+                    elif "healthy" in disease.lower():
+                        st.success(
+                            "Your crop appears healthy."
+                        )
+
+                    else:
+                        st.warning(
+                            "Cause information not available."
+                        )
+
+                else:
+                    st.error("API Error")
+                    st.write(result)
+
+            except Exception as e:
+                st.error("Something went wrong.")
+                st.write(e)
+
+# CHATBOT SECTION
 st.markdown("---")
 st.header("🤖 Farming Chatbot")
 
-user_question = st.text_input(
-    "Ask farming related questions",
-    value=voice_text if voice_text else ""
-)
-
-faq = {
-    "how to prevent leaf blight":
-    "Avoid excess moisture and use fungicide spray.",
-
-    "best fertilizer for tomato":
-    "Use nitrogen-rich organic fertilizer for tomatoes.",
-
-    "how much water for crops":
-    "Most crops need moderate watering depending on weather.",
-
-    "why leaves turn yellow":
-    "Yellow leaves may occur due to nutrient deficiency or overwatering.",
-
-    "how to increase crop growth":
-    "Use proper sunlight, irrigation, and balanced fertilizer."
-}
-
-if user_question:
-
-    question = user_question.lower()
-
-    matches = get_close_matches(
-        question,
-        faq.keys(),
-        n=1,
-        cutoff=0.3
-    )
-
-    if matches:
-        answer = faq[matches[0]]
-        st.success(answer)
-
-    else:
-        st.warning(
-            "Sorry, I do not know this yet."
-        )
-
-    # Voice Input
+# Voice Input
 voice_text = speech_to_text(
     language='en',
     use_container_width=True,
@@ -108,6 +104,38 @@ voice_text = speech_to_text(
     key='voice'
 )
 
-if voice_text:
-    st.success(f"You said: {voice_text}")
-    user_question = voice_text
+# Text Input
+user_question = st.text_input(
+    "Ask farming related questions",
+    value=voice_text if voice_text else ""
+)
+
+# Chatbot Answers
+if user_question:
+
+    question = user_question.lower()
+
+    if "fertilizer" in question:
+        st.success(
+            "Use nitrogen-rich fertilizer for better crop growth."
+        )
+
+    elif "water" in question:
+        st.success(
+            "Most crops need regular watering but avoid overwatering."
+        )
+
+    elif "disease" in question:
+        st.success(
+            "Upload crop image above to detect disease."
+        )
+
+    elif "pesticide" in question:
+        st.success(
+            "Use recommended pesticides carefully and follow safety guidelines."
+        )
+
+    else:
+        st.info(
+            "Please ask farming related questions."
+        )
