@@ -2,6 +2,7 @@ import streamlit as st
 from PIL import Image
 import requests
 from streamlit_mic_recorder import speech_to_text
+import google.generativeai as genai
 
 # PAGE SETTINGS
 st.set_page_config(
@@ -13,6 +14,10 @@ st.set_page_config(
 # TITLE
 st.title("🌱 AI Farming Assistant")
 st.write("Upload a crop image to detect possible disease.")
+# GEMINI API
+genai.configure(api_key="YOUR_GEMINI_API_KEY")
+
+model = genai.GenerativeModel("gemini-1.5-flash")
 
 # HUGGING FACE API
 API_URL = "https://router.huggingface.co/hf-inference/models/linkanjarad/mobilenet_v2_1.0_224-plant-disease-identification"
@@ -110,32 +115,19 @@ user_question = st.text_input(
     value=voice_text if voice_text else ""
 )
 
-# Chatbot Answers
+# AI RESPONSE
 if user_question:
 
-    question = user_question.lower()
+    prompt = f"""
+    You are an agriculture expert.
+    Answer in simple language.
+    Support Hindi and English.
+    Give farming advice carefully.
 
-    if "fertilizer" in question:
-        st.success(
-            "Use nitrogen-rich fertilizer for better crop growth."
-        )
+    Question:
+    {user_question}
+    """
 
-    elif "water" in question:
-        st.success(
-            "Most crops need regular watering but avoid overwatering."
-        )
+    response = model.generate_content(prompt)
 
-    elif "disease" in question:
-        st.success(
-            "Upload crop image above to detect disease."
-        )
-
-    elif "pesticide" in question:
-        st.success(
-            "Use recommended pesticides carefully and follow safety guidelines."
-        )
-
-    else:
-        st.info(
-            "Please ask farming related questions."
-        )
+    st.success(response.text)
