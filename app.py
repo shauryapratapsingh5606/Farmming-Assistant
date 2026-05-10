@@ -208,9 +208,9 @@ if uploaded_file is not None:
 
                     found = False
 
-for key in disease_info:
+   for key in disease_info:
 
-    if key in disease.lower():
+   if key in disease.lower():
 
         info = disease_info[key]
 
