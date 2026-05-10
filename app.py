@@ -15,40 +15,88 @@ st.markdown("""
 <style>
 
 body {
-    background-color: #f4fff4;
+    background-color: #f1fff0;
 }
 
 .main {
-    background-color: #f4fff4;
+    background: linear-gradient(to bottom, #f1fff0, #ffffff);
+    padding: 2rem;
+    border-radius: 20px;
 }
 
+/* TITLE */
 h1 {
-    color: #2e7d32;
+    color: #1b5e20;
     text-align: center;
-    font-size: 45px;
+    font-size: 52px;
+    font-weight: bold;
 }
 
+/* SUBHEADINGS */
+h2, h3 {
+    color: #2e7d32;
+}
+
+/* BUTTONS */
 .stButton>button {
-    background-color: #2e7d32;
+    background: linear-gradient(90deg, #2e7d32, #43a047);
     color: white;
-    border-radius: 12px;
-    height: 3em;
+    border-radius: 14px;
+    height: 3.2em;
     width: 100%;
     font-size: 18px;
+    font-weight: bold;
     border: none;
+    transition: 0.3s;
 }
 
 .stButton>button:hover {
-    background-color: #1b5e20;
+    background: linear-gradient(90deg, #1b5e20, #2e7d32);
+    transform: scale(1.02);
     color: white;
 }
 
+/* INPUT BOX */
 .stTextInput>div>div>input {
-    border-radius: 10px;
+    border-radius: 12px;
+    border: 2px solid #a5d6a7;
+    padding: 10px;
 }
 
-.css-1d391kg {
+/* FILE UPLOADER */
+section[data-testid="stFileUploader"] {
+    border: 2px dashed #66bb6a;
+    padding: 20px;
+    border-radius: 15px;
+    background-color: #f8fff8;
+}
+
+/* CHAT SECTION */
+.chat-box {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
+}
+
+/* SIDEBAR */
+section[data-testid="stSidebar"] {
     background-color: #e8f5e9;
+}
+
+/* SUCCESS BOX */
+.stSuccess {
+    border-radius: 12px;
+}
+
+/* INFO BOX */
+.stInfo {
+    border-radius: 12px;
+}
+
+/* WARNING BOX */
+.stWarning {
+    border-radius: 12px;
 }
 
 </style>
