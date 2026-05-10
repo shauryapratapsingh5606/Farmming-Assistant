@@ -130,7 +130,7 @@ model = genai.GenerativeModel("gemini-1.5-flash")
 API_URL = "https://router.huggingface.co/hf-inference/models/linkanjarad/mobilenet_v2_1.0_224-plant-disease-identification"
 
 headers = {
-    "Authorization": "Bearer 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"
+    "Authorization": "Bearer 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"
 }
 
 # IMAGE UPLOAD
