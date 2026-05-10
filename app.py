@@ -229,7 +229,56 @@ if uploaded_file is not None:
 
                 st.error("Something went wrong.")
                 st.write(e)
+# WEATHER SECTION
 
+st.markdown("---")
+
+st.header("🌦 Live Weather")
+
+city = st.text_input("Enter Your City")
+
+if city:
+
+    weather_url = f"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={st.secrets['WEATHER_API_KEY']}&units=metric"
+
+    weather_response = requests.get(weather_url)
+
+    weather_data = weather_response.json()
+
+    if weather_response.status_code == 200:
+
+        temperature = weather_data["main"]["temp"]
+
+        humidity = weather_data["main"]["humidity"]
+
+        weather_condition = weather_data["weather"][0]["description"]
+
+        wind_speed = weather_data["wind"]["speed"]
+
+        st.markdown(f"""
+        <div style="
+            background-color:#edf7ed;
+            padding:25px;
+            border-radius:15px;
+            margin-top:20px;
+            box-shadow:0px 0px 10px rgba(0,0,0,0.1);
+        ">
+            <h2 style="color:#1b5e20;">📍 {city.title()}</h2>
+
+            <h3>🌡 Temperature: {temperature} °C</h3>
+
+            <h3>💧 Humidity: {humidity}%</h3>
+
+            <h3>☁ Weather: {weather_condition.title()}</h3>
+
+            <h3>🌬 Wind Speed: {wind_speed} m/s</h3>
+        </div>
+        """, unsafe_allow_html=True)
+
+    else:
+
+        st.error("City not found.")
+        
 # CHATBOT SECTION
 st.markdown("---")
 
