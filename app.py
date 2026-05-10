@@ -190,10 +190,10 @@ if user_question:
     response = model.generate_content(prompt)
 
     st.success(response.text)
-
+   #FOOTER
    st.markdown("---")
 
-st.markdown(
+     st.markdown(
     "<center>Made with ❤️ for Farmers</center>",
     unsafe_allow_html=True
 )
