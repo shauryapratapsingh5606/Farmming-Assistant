@@ -17,7 +17,7 @@ st.write("Upload a crop image to detect possible disease.")
 API_URL = "https://router.huggingface.co/hf-inference/models/linkanjarad/mobilenet_v2_1.0_224-plant-disease-identification"
 
 headers = {
-    "Authorization": "Bearer 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"
+    "Authorization": "Bearer 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"
 }
 
 # IMAGE UPLOAD
