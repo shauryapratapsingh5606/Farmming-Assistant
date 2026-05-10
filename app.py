@@ -193,7 +193,7 @@ if user_question:
 #FOOTER
 st.markdown("---")
 
-    st.markdown(
+st.markdown(
     "<center>Made with ❤️ for Farmers</center>",
     unsafe_allow_html=True
 )
