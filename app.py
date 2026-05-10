@@ -2,6 +2,7 @@ import streamlit as st
 from PIL import Image
 import random
 from difflib import get_close_matches
+from streamlit_mic_recorder import speech_to_text
 
 # PAGE SETTINGS
 st.set_page_config(
@@ -58,7 +59,8 @@ st.markdown("---")
 st.header("🤖 Farming Chatbot")
 
 user_question = st.text_input(
-    "Ask farming related questions"
+    "Ask farming related questions",
+    value=voice_text if voice_text else ""
 )
 
 faq = {
@@ -97,3 +99,15 @@ if user_question:
         st.warning(
             "Sorry, I do not know this yet."
         )
+
+    # Voice Input
+voice_text = speech_to_text(
+    language='en',
+    use_container_width=True,
+    just_once=True,
+    key='voice'
+)
+
+if voice_text:
+    st.success(f"You said: {voice_text}")
+    user_question = voice_text
