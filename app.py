@@ -242,23 +242,7 @@ g = geocoder.ip('me')
 
 city = g.city
 
-st.success(f"📍 Detected Location: {city}"
-    "📍 Select Your City",
-    [
-        "Delhi",
-        "Mumbai",
-        "Lucknow",
-        "Patna",
-        "Bhopal",
-        "Jaipur",
-        "Kolkata",
-        "Chandigarh",
-        "Varanasi",
-        "Pune",
-        "Hyderabad",
-        "Bengaluru"
-    ]
-)
+st.success(f"📍 Detected Location: {city}")
 
 if city:
 
