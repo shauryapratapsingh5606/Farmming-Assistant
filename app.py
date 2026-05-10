@@ -108,6 +108,39 @@ model = genai.GenerativeModel("gemini-1.5-flash")
 
 # HUGGING FACE API
 API_URL = "https://router.huggingface.co/hf-inference/models/linkanjarad/mobilenet_v2_1.0_224-plant-disease-identification"
+# DISEASE INFORMATION DATABASE
+
+disease_info = {
+
+    "rust": {
+        "cause": "Rust fungus caused by wet conditions.",
+        "treatment": "Spray Mancozeb or Copper Fungicide.",
+        "organic": "Use neem oil spray every 7 days.",
+        "prevention": "Avoid excess watering and improve airflow."
+    },
+
+    "blight": {
+        "cause": "Blight spreads due to fungus and humidity.",
+        "treatment": "Use Chlorothalonil fungicide.",
+        "organic": "Remove infected leaves and use compost tea.",
+        "prevention": "Keep leaves dry and maintain spacing."
+    },
+
+    "leaf scorch": {
+        "cause": "Leaf scorch occurs due to heat or fungal infection.",
+        "treatment": "Use balanced fertilizer and fungicide.",
+        "organic": "Use organic compost and proper irrigation.",
+        "prevention": "Avoid water stress and extreme heat."
+    },
+
+    "healthy": {
+        "cause": "Your crop is healthy.",
+        "treatment": "No treatment needed.",
+        "organic": "Maintain good farming practices.",
+        "prevention": "Continue regular monitoring."
+    }
+
+}
 
 # IMAGE UPLOAD
 uploaded_file = st.file_uploader(
@@ -173,8 +206,30 @@ if uploaded_file is not None:
                     </div>
                     """, unsafe_allow_html=True)
 
-                    # BLIGHT
-                    if "blight" in disease.lower():
+                    found = False
+
+for key in disease_info:
+
+    if key in disease.lower():
+
+        info = disease_info[key]
+
+        st.warning(f"Cause: {info['cause']}")
+
+        st.info(f"Treatment: {info['treatment']}")
+
+        st.success(f"Organic Solution: {info['organic']}")
+
+        st.error(f"Prevention: {info['prevention']}")
+
+        found = True
+
+        break
+
+if not found:
+
+    st.warning("Disease information currently unavailable.")
+        
 
                         st.markdown("""
                         <div style="
