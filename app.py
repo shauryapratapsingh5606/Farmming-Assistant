@@ -1,6 +1,7 @@
 import streamlit as st
 from PIL import Image
 import requests
+import random
 
 # PAGE SETTINGS
 st.set_page_config(
