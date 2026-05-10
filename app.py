@@ -156,10 +156,13 @@ if uploaded_file is not None:
             image_bytes = uploaded_file.getvalue()
 
             response = requests.post(
-                API_URL,
-                headers=headers,
-                data=image_bytes
-            )
+    API_URL,
+    headers={
+        "Authorization": f"Bearer {st.secrets['HF_TOKEN']}",
+        "Content-Type": "image/jpeg"
+    },
+    data=image_bytes
+)
 
             try:
                 result = response.json()
