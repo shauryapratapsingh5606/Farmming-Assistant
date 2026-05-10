@@ -1,6 +1,7 @@
 import streamlit as st
 from PIL import Image
 import random
+from difflib import get_close_matches
 
 # PAGE SETTINGS
 st.set_page_config(
@@ -50,3 +51,49 @@ if st.button("Detect Disease"):
     st.success(f"🌿 Disease: {result['name']}")
     st.warning(f"⚠ Cause: {result['cause']}")
     st.info(f"💡 Solution: {result['solution']}")
+
+     # ---------------- CHATBOT ----------------
+
+st.markdown("---")
+st.header("🤖 Farming Chatbot")
+
+user_question = st.text_input(
+    "Ask farming related questions"
+)
+
+faq = {
+    "how to prevent leaf blight":
+    "Avoid excess moisture and use fungicide spray.",
+
+    "best fertilizer for tomato":
+    "Use nitrogen-rich organic fertilizer for tomatoes.",
+
+    "how much water for crops":
+    "Most crops need moderate watering depending on weather.",
+
+    "why leaves turn yellow":
+    "Yellow leaves may occur due to nutrient deficiency or overwatering.",
+
+    "how to increase crop growth":
+    "Use proper sunlight, irrigation, and balanced fertilizer."
+}
+
+if user_question:
+
+    question = user_question.lower()
+
+    matches = get_close_matches(
+        question,
+        faq.keys(),
+        n=1,
+        cutoff=0.3
+    )
+
+    if matches:
+        answer = faq[matches[0]]
+        st.success(answer)
+
+    else:
+        st.warning(
+            "Sorry, I do not know this yet."
+        )
