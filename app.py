@@ -10,7 +10,66 @@ st.set_page_config(
     page_icon="🌱",
     layout="centered"
 )
+# CUSTOM CSS
+st.markdown("""
+<style>
 
+body {
+    background-color: #f4fff4;
+}
+
+.main {
+    background-color: #f4fff4;
+}
+
+h1 {
+    color: #2e7d32;
+    text-align: center;
+    font-size: 45px;
+}
+
+.stButton>button {
+    background-color: #2e7d32;
+    color: white;
+    border-radius: 12px;
+    height: 3em;
+    width: 100%;
+    font-size: 18px;
+    border: none;
+}
+
+.stButton>button:hover {
+    background-color: #1b5e20;
+    color: white;
+}
+
+.stTextInput>div>div>input {
+    border-radius: 10px;
+}
+
+.css-1d391kg {
+    background-color: #e8f5e9;
+}
+
+</style>
+""", unsafe_allow_html=True)
+
+# SIDEBAR
+st.sidebar.title("🌱 Farming Assistant")
+
+st.sidebar.info(
+    "AI Powered Crop Disease Detection System"
+)
+
+page = st.sidebar.radio(
+    "Navigation",
+    [
+        "Home",
+        "Disease Detection",
+        "AI Chatbot",
+        "About"
+    ]
+)
 # TITLE
 st.title("🌱 AI Farming Assistant")
 st.write("Upload a crop image to detect possible disease.")
@@ -131,3 +190,10 @@ if user_question:
     response = model.generate_content(prompt)
 
     st.success(response.text)
+
+   st.markdown("---")
+
+st.markdown(
+    "<center>Made with ❤️ for Farmers</center>",
+    unsafe_allow_html=True
+)
