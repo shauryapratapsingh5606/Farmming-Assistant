@@ -236,7 +236,13 @@ st.markdown("---")
 
 st.header("🌦 Live Weather")
 
-city = st.selectbox(
+# AUTO LOCATION DETECTION
+
+g = geocoder.ip('me')
+
+city = g.city
+
+st.success(f"📍 Detected Location: {city}"
     "📍 Select Your City",
     [
         "Delhi",
