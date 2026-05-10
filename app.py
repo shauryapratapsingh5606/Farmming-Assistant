@@ -8,7 +8,7 @@ import google.generativeai as genai
 st.set_page_config(
     page_title="AI Farming Assistant",
     page_icon="🌱",
-    layout="centered"
+    layout="wide"
 )
 
 # CUSTOM CSS
@@ -16,65 +16,56 @@ st.markdown("""
 <style>
 
 body {
-    background-color: #f1fff0;
+    background-color: #f4fff4;
 }
 
 .main {
-    background: linear-gradient(to bottom, #f1fff0, #ffffff);
-    padding: 2rem;
-    border-radius: 20px;
+    background-color: #f4fff4;
 }
 
-/* TITLE */
 h1 {
     color: #1b5e20;
+    font-size: 50px;
     text-align: center;
-    font-size: 52px;
     font-weight: bold;
 }
 
-/* SUBHEADINGS */
 h2, h3 {
     color: #2e7d32;
 }
 
-/* BUTTONS */
 .stButton>button {
-    background: linear-gradient(90deg, #2e7d32, #43a047);
+    background-color: #2e7d32;
     color: white;
-    border-radius: 14px;
-    height: 3.2em;
+    border-radius: 12px;
+    height: 3em;
     width: 100%;
     font-size: 18px;
-    font-weight: bold;
     border: none;
-    transition: 0.3s;
 }
 
 .stButton>button:hover {
-    background: linear-gradient(90deg, #1b5e20, #2e7d32);
-    transform: scale(1.02);
+    background-color: #1b5e20;
     color: white;
 }
 
-/* INPUT BOX */
 .stTextInput>div>div>input {
-    border-radius: 12px;
-    border: 2px solid #a5d6a7;
-    padding: 10px;
+    border-radius: 10px;
+    border: 2px solid #81c784;
 }
 
-/* FILE UPLOADER */
-section[data-testid="stFileUploader"] {
-    border: 2px dashed #66bb6a;
-    padding: 20px;
+.result-box {
+    background-color: #edf7ed;
+    padding: 25px;
     border-radius: 15px;
-    background-color: #f8fff8;
+    margin-top: 20px;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
 }
 
-/* SIDEBAR */
-section[data-testid="stSidebar"] {
-    background-color: #e8f5e9;
+.footer {
+    text-align: center;
+    color: gray;
+    margin-top: 50px;
 }
 
 </style>
@@ -99,7 +90,10 @@ page = st.sidebar.radio(
 
 # TITLE
 st.title("🌱 AI Farming Assistant")
-st.write("Upload a crop image to detect possible disease.")
+
+st.write(
+    "Upload a crop image to detect possible disease."
+)
 
 # GEMINI API
 genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
@@ -108,8 +102,13 @@ model = genai.GenerativeModel("gemini-1.5-flash")
 
 # HUGGING FACE API
 API_URL = "https://router.huggingface.co/hf-inference/models/linkanjarad/mobilenet_v2_1.0_224-plant-disease-identification"
-# DISEASE INFORMATION DATABASE
 
+headers = {
+    "Authorization": f"Bearer {st.secrets['HF_TOKEN']}",
+    "Content-Type": "image/jpeg"
+}
+
+# DISEASE INFORMATION DATABASE
 disease_info = {
 
     "rust": {
@@ -166,14 +165,12 @@ if uploaded_file is not None:
 
             response = requests.post(
                 API_URL,
-                headers={
-                    "Authorization": f"Bearer {st.secrets['HF_TOKEN']}",
-                    "Content-Type": "image/jpeg"
-                },
+                headers=headers,
                 data=image_bytes
             )
 
             try:
+
                 result = response.json()
 
                 if isinstance(result, list):
@@ -181,161 +178,64 @@ if uploaded_file is not None:
                     disease = result[0]['label']
                     confidence = result[0]['score']
 
-                    # RESULT CARD
                     st.markdown(f"""
-                    <div style="
-                    background: linear-gradient(135deg,#e8f5e9,#ffffff);
-                    padding:25px;
-                    border-radius:20px;
-                    box-shadow:0px 4px 15px rgba(0,0,0,0.1);
-                    margin-top:20px;
-                    ">
-
-                    <h2 style="color:#1b5e20;">
-                    🌱 Disease Detected
-                    </h2>
-
-                    <h3 style="color:#d32f2f;">
-                    {disease}
-                    </h3>
-
-                    <p style="font-size:18px;">
-                    <b>Confidence Score:</b> {round(confidence * 100, 2)}%
-                    </p>
-
-                      </div>
+                    <div class="result-box">
+                        <h1>🌱 Disease Detected</h1>
+                        <h2 style="color:red;">{disease}</h2>
+                        <h3>Confidence Score: {round(confidence * 100, 2)}%</h3>
+                    </div>
                     """, unsafe_allow_html=True)
 
-            found = False
+                    found = False
 
-    for key in disease_info:
+                    for key in disease_info:
 
-        if key in disease.lower():
+                        if key in disease.lower():
 
-            info = disease_info[key]
+                            info = disease_info[key]
 
-            st.warning(f"Cause: {info['cause']}")
+                            st.warning(
+                                f"Cause: {info['cause']}"
+                            )
 
-            st.info(f"Treatment: {info['treatment']}")
+                            st.info(
+                                f"Treatment: {info['treatment']}"
+                            )
 
-            st.success(f"Organic Solution: {info['organic']}")
+                            st.success(
+                                f"Organic Solution: {info['organic']}"
+                            )
 
-            st.error(f"Prevention: {info['prevention']}")
+                            st.error(
+                                f"Prevention: {info['prevention']}"
+                            )
 
-           found = True
+                            found = True
 
-           break
+                            break
 
-if not found:
+                    if not found:
 
-    st.warning("Disease information currently unavailable.")
-        
-
-                        st.markdown("""
-                        <div style="
-                        background-color:#fff3e0;
-                        padding:18px;
-                        border-radius:15px;
-                        margin-top:10px;
-                        ">
-
-                        <h4>🦠 Cause</h4>
-                        Fungal infection due to humidity and excess moisture.
-
-                        <h4>💊 Treatment</h4>
-                        Use Chlorothalonil or Mancozeb fungicide spray.
-
-                        <h4>🌿 Organic Solution</h4>
-                        Spray baking soda mixed with water weekly.
-
-                        <h4>🛡 Prevention</h4>
-                        Avoid overwatering and remove infected leaves.
-
-                        <h4>🌱 Fertilizer Suggestion</h4>
-                        Use balanced NPK fertilizer.
-
-                        </div>
-                        """, unsafe_allow_html=True)
-
-                    # RUST
-                    elif "rust" in disease.lower():
-
-                        st.markdown("""
-                        <div style="
-                        background-color:#fff3e0;
-                        padding:18px;
-                        border-radius:15px;
-                        margin-top:10px;
-                        ">
-
-                        <h4>🦠 Cause</h4>
-                        Rust fungus caused by wet conditions.
-
-                        <h4>💊 Treatment</h4>
-                        Spray Mancozeb or Copper Fungicide every 7 days.
-
-                        <h4>🌿 Organic Solution</h4>
-                        Use Neem Oil spray on affected leaves.
-
-                        <h4>🛡 Prevention</h4>
-                        Avoid excess moisture and improve air circulation.
-
-                        <h4>🌱 Fertilizer Suggestion</h4>
-                        Use Potassium-rich fertilizer for stronger immunity.
-
-                        </div>
-                        """, unsafe_allow_html=True)
-
-                    # HEALTHY
-                    elif "healthy" in disease.lower():
-
-                        st.markdown("""
-                        <div style="
-                        background-color:#e8f5e9;
-                        padding:18px;
-                        border-radius:15px;
-                        margin-top:10px;
-                        ">
-
-                        <h3>✅ Plant is Healthy</h3>
-
-                        Keep monitoring regularly and maintain proper nutrition.
-
-                        🌱 Recommended:
-                        Use organic compost and balanced fertilizer monthly.
-
-                        </div>
-                        """, unsafe_allow_html=True)
-
-                    # OTHER
-                    else:
-
-                        st.markdown("""
-                        <div style="
-                        background-color:#fff3e0;
-                        padding:18px;
-                        border-radius:15px;
-                        margin-top:10px;
-                        ">
-
-                        Disease information currently unavailable.
-
-                        </div>
-                        """, unsafe_allow_html=True)
+                        st.warning(
+                            "Disease information currently unavailable."
+                        )
 
                 else:
+
                     st.error("API Error")
                     st.write(result)
 
             except Exception as e:
+
                 st.error("Something went wrong.")
                 st.write(e)
 
 # CHATBOT SECTION
 st.markdown("---")
+
 st.header("🤖 Farming Chatbot")
 
-# VOICE INPUT
+# Voice Input
 voice_text = speech_to_text(
     language='en',
     use_container_width=True,
@@ -343,7 +243,7 @@ voice_text = speech_to_text(
     key='voice'
 )
 
-# USER INPUT
+# Text Input
 user_question = st.text_input(
     "Ask farming related questions",
     value=voice_text if voice_text else ""
@@ -355,33 +255,24 @@ if user_question:
     prompt = f"""
     You are an agriculture expert.
 
-    Support:
-    - English
-    - Hindi
-    - Bhojpuri
-    - Awadhi
-    - Haryanvi
-    - Punjabi
-    - Marathi
+    Answer in simple language.
 
-    Give simple farming advice.
+    Support Hindi and English.
 
-    User Question:
+    Give farming advice carefully.
+
+    Question:
     {user_question}
     """
 
-    try:
-        response = model.generate_content(prompt)
-        st.success(response.text)
+    response = model.generate_content(prompt)
 
-    except Exception as e:
-        st.error("Gemini AI Error")
-        st.write(e)
+    st.success(response.text)
 
 # FOOTER
 st.markdown("---")
 
 st.markdown(
-    "<center>Made with ❤️ for Farmers</center>",
+    "<div class='footer'>Made with ❤️ for Farmers</div>",
     unsafe_allow_html=True
 )
