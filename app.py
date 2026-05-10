@@ -203,28 +203,28 @@ if uploaded_file is not None:
                     <b>Confidence Score:</b> {round(confidence * 100, 2)}%
                     </p>
 
-                    </div>
+                      </div>
                     """, unsafe_allow_html=True)
 
-                    found = False
+    found = False
 
     for key in disease_info:
 
-    if key in disease.lower():
+        if key in disease.lower():
 
-        info = disease_info[key]
+            info = disease_info[key]
 
-        st.warning(f"Cause: {info['cause']}")
+            st.warning(f"Cause: {info['cause']}")
 
-        st.info(f"Treatment: {info['treatment']}")
+            st.info(f"Treatment: {info['treatment']}")
 
-        st.success(f"Organic Solution: {info['organic']}")
+            st.success(f"Organic Solution: {info['organic']}")
 
-        st.error(f"Prevention: {info['prevention']}")
+            st.error(f"Prevention: {info['prevention']}")
 
-        found = True
+           found = True
 
-        break
+           break
 
 if not found:
 
