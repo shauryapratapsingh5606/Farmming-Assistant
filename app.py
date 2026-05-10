@@ -1,6 +1,7 @@
 import streamlit as st
 from PIL import Image
 import requests
+import geocoder
 from streamlit_mic_recorder import speech_to_text
 import google.generativeai as genai
 
