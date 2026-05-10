@@ -169,17 +169,42 @@ if uploaded_file is not None:
                     disease = result[0]['label']
                     confidence = result[0]['score']
 
-                    st.success(f"Detected Disease: {disease}")
+                    st.markdown(f"""
+<div style="
+background: linear-gradient(135deg,#e8f5e9,#ffffff);
+padding:25px;
+border-radius:20px;
+box-shadow:0px 4px 15px rgba(0,0,0,0.1);
+margin-top:20px;
+">
 
-                    st.info(
-                        f"Confidence Score: {round(confidence * 100, 2)}%"
-                    )
+<h2 style="color:#1b5e20;">
+🌱 Disease Detected
+</h2>
+
+<h3 style="color:#d32f2f;">
+{disease}
+</h3>
+
+<p style="font-size:18px;">
+<b>Confidence Score:</b> {round(confidence * 100, 2)}%
+</p>
+
+</div>
+""", unsafe_allow_html=True)
 
                     # Disease Causes
                     if "blight" in disease.lower():
-                        st.warning(
-                            "Cause: Fungal infection due to humidity and excess moisture."
-                        )
+                        st.markdown("""
+<div style="
+background-color:#fff3e0;
+padding:15px;
+border-radius:15px;
+margin-top:10px;
+">
+<b>Cause:</b> Fungal infection due to humidity and excess moisture.
+</div>
+""", unsafe_allow_html=True)
 
                     elif "rust" in disease.lower():
                         st.warning(
