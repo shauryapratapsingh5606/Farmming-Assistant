@@ -235,7 +235,23 @@ st.markdown("---")
 
 st.header("🌦 Live Weather")
 
-city = st.text_input("Enter Your City")
+city = st.selectbox(
+    "📍 Select Your City",
+    [
+        "Delhi",
+        "Mumbai",
+        "Lucknow",
+        "Patna",
+        "Bhopal",
+        "Jaipur",
+        "Kolkata",
+        "Chandigarh",
+        "Varanasi",
+        "Pune",
+        "Hyderabad",
+        "Bengaluru"
+    ]
+)
 
 if city:
 
