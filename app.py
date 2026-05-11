@@ -308,22 +308,46 @@ user_question = st.text_input(
 # AI RESPONSE
 if user_question:
 
-    prompt = f"""
-    You are an agriculture expert.
+    try:
 
-    Answer in simple language.
+        prompt = f"""
+        You are an expert AI farming assistant.
 
-    Support Hindi and English.
+        Rules:
+        - Give short and practical farming advice.
+        - Support Hindi and English.
+        - Help farmers with crops, fertilizer, disease,
+          irrigation, pesticides, weather and soil.
 
-    Give farming advice carefully.
+        User Question:
+        {user_question}
+        """
 
-    Question:
-    {user_question}
-    """
+        response = model.generate_content(prompt)
 
-    response = model.generate_content(prompt)
+        st.markdown(f"""
+        <div style="
+            background-color:#edf7ed;
+            padding:20px;
+            border-radius:15px;
+            margin-top:15px;
+            box-shadow:0px 0px 10px rgba(0,0,0,0.1);
+        ">
+            <h3 style="color:#1b5e20;">
+            🤖 AI Farming Advice
+            </h3>
 
-    st.success(response.text)
+            <p style="font-size:18px;">
+            {response.text}
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+
+    except Exception as e:
+
+        st.error("Gemini AI Error")
+
+        st.write(e)
 
 # FOOTER
 st.markdown("---")
