@@ -198,6 +198,45 @@ fertilizer_data = {
         "Clay Soil": "Use Nitrogen fertilizer"
     }
 }
+# =========================
+# SOIL HEALTH DATABASE
+# =========================
+
+soil_data = {
+
+    "Black Soil": {
+
+        "nutrients": "Rich in Potassium, Calcium and Magnesium",
+
+        "best_crops": "Cotton, Wheat, Soybean, Maize",
+
+        "fertilizer": "Use Phosphorus and Nitrogen fertilizers",
+
+        "irrigation": "Moderate irrigation required"
+    },
+
+    "Sandy Soil": {
+
+        "nutrients": "Low nutrients and poor water retention",
+
+        "best_crops": "Groundnut, Watermelon, Coconut",
+
+        "fertilizer": "Use Organic Compost and Potassium",
+
+        "irrigation": "Frequent irrigation required"
+    },
+
+    "Clay Soil": {
+
+        "nutrients": "Rich in nutrients and holds water well",
+
+        "best_crops": "Rice, Broccoli, Cabbage",
+
+        "fertilizer": "Use Organic Matter and Gypsum",
+
+        "irrigation": "Low irrigation required"
+    }
+}
 
 # =========================================
 # HOME PAGE
@@ -326,7 +365,36 @@ elif page == "Fertilizer Recommendation":
 
         recommendation = fertilizer_data[crop][soil]
 
-        st.success(f"Recommended Fertilizer: {recommendation}")
+        st.success(f"Recommended Fertilizer: {recommendation}") 
+        
+        # =========================================
+# SOIL HEALTH ANALYSIS
+# =========================================
+
+elif page == "Soil Health":
+
+    st.header("🌱 Soil Health Analysis")
+
+    soil = st.selectbox(
+
+        "Select Soil Type",
+
+        ["Black Soil", "Sandy Soil", "Clay Soil"]
+
+    )
+
+    if st.button("Analyze Soil"):
+
+        data = soil_data[soil]
+
+        st.success(f"🧪 Nutrients: {data['nutrients']}")
+
+        st.info(f"🌾 Best Crops: {data['best_crops']}")
+
+        st.warning(f"💊 Fertilizer Advice: {data['fertilizer']}")
+
+        st.success(f"💧 Irrigation Advice: {data['irrigation']}")
+
 
 # =========================================
 # AI CHATBOT
