@@ -424,28 +424,28 @@ st.markdown(
 # FERTILIZER RECOMMENDATION
 # =========================
 
-elif page == "Fertilizer Recommendation":
+ elif page == "Fertilizer Recommendation":
 
-    st.title("🌾 Smart Fertilizer Recommendation")
+     st.title("🌾 Smart Fertilizer Recommendation")
 
-    crop = st.selectbox(
+     crop = st.selectbox(
 
-        "Select Crop",
+         "Select Crop",
 
-        ["Wheat", "Rice", "Maize", "Sugarcane"]
+         ["Wheat", "Rice", "Maize", "Sugarcane"]
 
-    )
+     )
 
-    soil = st.selectbox(
+     soil = st.selectbox(
 
-        "Select Soil Type",
+         "Select Soil Type",
 
-        ["Black Soil", "Sandy Soil", "Clay Soil"]
+         ["Black Soil", "Sandy Soil", "Clay Soil"]
 
-    )
+     )
 
-    if st.button("Get Fertilizer Recommendation"):
+     if st.button("Get Fertilizer Recommendation"):
 
-        recommendation = fertilizer_data[crop][soil]
+         recommendation = fertilizer_data[crop][soil]
 
-        st.success(f"Recommended Fertilizer: {recommendation}")
+         st.success(f"Recommended Fertilizer: {recommendation}")
