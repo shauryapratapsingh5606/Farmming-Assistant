@@ -74,21 +74,93 @@ h2, h3 {
 
 # SIDEBAR
 st.sidebar.title("🌱 Farming Assistant")
+# LANGUAGE SELECTOR
+
+language = st.sidebar.selectbox(
+
+    "🌍 Select Language",
+
+    [
+        "English",
+        "हिन्दी",
+        "भोजपुरी",
+        "अवधी"
+    ]
+)
+# =========================================
+# LANGUAGE TRANSLATIONS
+# =========================================
+
+translations = {
+
+    "English": {
+
+        "home": "Home",
+        "disease": "Disease Detection",
+        "fertilizer": "Fertilizer Recommendation",
+        "soil": "Soil Health",
+        "irrigation": "Smart Irrigation",
+        "chatbot": "AI Chatbot",
+        "about": "About"
+    },
+
+    "हिन्दी": {
+
+        "home": "होम",
+        "disease": "रोग पहचान",
+        "fertilizer": "उर्वरक सुझाव",
+        "soil": "मिट्टी स्वास्थ्य",
+        "irrigation": "सिंचाई सलाह",
+        "chatbot": "एआई चैटबॉट",
+        "about": "जानकारी"
+    },
+
+    "भोजपुरी": {
+
+        "home": "घर",
+        "disease": "रोग पहचान",
+        "fertilizer": "खाद सलाह",
+        "soil": "मिट्टी जाँच",
+        "irrigation": "सिंचाई सलाह",
+        "chatbot": "एआई चैट",
+        "about": "जानकारी"
+    },
+
+    "अवधी": {
+
+        "home": "घर",
+        "disease": "रोग पहिचान",
+        "fertilizer": "खाद सलाह",
+        "soil": "मिट्टी जाँच",
+        "irrigation": "सिंचाई सलाह",
+        "chatbot": "एआई चैट",
+        "about": "जानकारी"
+    }
+}
 
 st.sidebar.info(
     "AI Powered Crop Disease Detection System"
 )
 
 page = st.sidebar.radio(
+
     "Navigation",
+
     [
-        "Home",
-        "Disease Detection",
-        "Fertilizer Recommendation",
-        "Soil Health",
-        "Smart Irrigation",
-        "AI Chatbot",
-        "About"
+
+        translations[language]["home"],
+
+        translations[language]["disease"],
+
+        translations[language]["fertilizer"],
+
+        translations[language]["soil"],
+
+        translations[language]["irrigation"],
+
+        translations[language]["chatbot"],
+
+        translations[language]["about"]
     ]
 )
 
