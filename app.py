@@ -100,7 +100,7 @@ st.write(
 # GEMINI API
 genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
 
-model = genai.GenerativeModel("models/gemini-1.5-flash")
+model = genai.GenerativeModel("gemini-1.5-flash")
 
 # HUGGING FACE API
 API_URL = "https://router.huggingface.co/hf-inference/models/linkanjarad/mobilenet_v2_1.0_224-plant-disease-identification"
@@ -199,221 +199,266 @@ fertilizer_data = {
     }
 }
 
-# IMAGE UPLOAD
-uploaded_file = st.file_uploader(
-    "Upload Crop Image",
-    type=["jpg", "jpeg", "png"]
-)
+# =========================================
+# HOME PAGE
+# =========================================
 
-if uploaded_file is not None:
+if page == "Home":
 
-    image = Image.open(uploaded_file)
+    st.subheader("🏠 Welcome Farmer")
 
-    st.image(
-        image,
-        caption="Uploaded Image",
-        use_container_width=True
+    st.write("""
+    This AI Farming Assistant helps farmers with:
+
+    ✅ Crop Disease Detection  
+    ✅ Weather Information  
+    ✅ Smart Fertilizer Recommendation  
+    ✅ AI Farming Chatbot  
+    """)
+
+# =========================================
+# DISEASE DETECTION
+# =========================================
+
+elif page == "Disease Detection":
+
+    uploaded_file = st.file_uploader(
+        "Upload Crop Image",
+        type=["jpg", "jpeg", "png"]
     )
 
-    if st.button("Detect Disease"):
+    if uploaded_file is not None:
 
-        with st.spinner("Detecting disease..."):
+        image = Image.open(uploaded_file)
 
-            image_bytes = uploaded_file.getvalue()
+        st.image(
+            image,
+            caption="Uploaded Image",
+            use_container_width=True
+        )
 
-            response = requests.post(
-                API_URL,
-                headers=headers,
-                data=image_bytes
-            )
+        if st.button("Detect Disease"):
 
-            try:
+            with st.spinner("Detecting disease..."):
 
-                result = response.json()
+                image_bytes = uploaded_file.getvalue()
 
-                if isinstance(result, list):
+                response = requests.post(
+                    API_URL,
+                    headers=headers,
+                    data=image_bytes
+                )
 
-                    disease = result[0]['label']
-                    confidence = result[0]['score']
+                try:
 
-                    st.markdown(f"""
-                    <div class="result-box">
-                        <h1>🌱 Disease Detected</h1>
-                        <h2 style="color:red;">{disease}</h2>
-                        <h3>Confidence Score: {round(confidence * 100, 2)}%</h3>
-                    </div>
-                    """, unsafe_allow_html=True)
+                    result = response.json()
 
-                    found = False
+                    if isinstance(result, list):
 
-                    for key in disease_info:
+                        disease = result[0]['label']
+                        confidence = result[0]['score']
 
-                        if key in disease.lower():
+                        st.markdown(f"""
+                        <div class="result-box">
+                            <h1>🌱 Disease Detected</h1>
+                            <h2 style="color:red;">{disease}</h2>
+                            <h3>Confidence Score: {round(confidence * 100, 2)}%</h3>
+                        </div>
+                        """, unsafe_allow_html=True)
 
-                            info = disease_info[key]
+                        found = False
+
+                        for key in disease_info:
+
+                            if key in disease.lower():
+
+                                info = disease_info[key]
+
+                                st.warning(f"Cause: {info['cause']}")
+
+                                st.info(f"Treatment: {info['treatment']}")
+
+                                st.success(f"Recommended Fertilizer: {info['fertilizer']}")
+
+                                st.success(f"Organic Solution: {info['organic']}")
+
+                                st.error(f"Prevention: {info['prevention']}")
+
+                                found = True
+
+                                break
+
+                        if not found:
 
                             st.warning(
-                                f"Cause: {info['cause']}"
-                            )
-                            st.info(f"Treatment: {info['treatment']}")
-
-                            st.success(f"Recommended Fertilizer: {info['fertilizer']}")
-
-                            st.success(f"Organic Solution: {info['organic']}")
-
-                            st.warning(f"Prevention: {info['prevention']}")
-
-                            st.info(
-                                f"Treatment: {info['treatment']}"
+                                "Disease information currently unavailable."
                             )
 
-                            st.success(
-                                f"Organic Solution: {info['organic']}"
-                            )
+                    else:
 
-                            st.error(
-                                f"Prevention: {info['prevention']}"
-                            )
+                        st.error("API Error")
+                        st.write(result)
 
-                            found = True
+                except Exception as e:
 
-                            break
+                    st.error("Something went wrong.")
+                    st.write(e)
 
-                    if not found:
+# =========================================
+# FERTILIZER RECOMMENDATION
+# =========================================
 
-                        st.warning(
-                            "Disease information currently unavailable."
-                        )
+elif page == "Fertilizer Recommendation":
 
-                else:
+    st.header("🌾 Smart Fertilizer Recommendation")
 
-                    st.error("API Error")
-                    st.write(result)
+    crop = st.selectbox(
+        "Select Crop",
+        ["Wheat", "Rice", "Maize", "Sugarcane"]
+    )
 
-            except Exception as e:
+    soil = st.selectbox(
+        "Select Soil Type",
+        ["Black Soil", "Sandy Soil", "Clay Soil"]
+    )
 
-                st.error("Something went wrong.")
-                st.write(e)
+    if st.button("Get Fertilizer Recommendation"):
+
+        recommendation = fertilizer_data[crop][soil]
+
+        st.success(f"Recommended Fertilizer: {recommendation}")
+
+# =========================================
+# AI CHATBOT
+# =========================================
+
+elif page == "AI Chatbot":
+
+    st.header("🤖 Farming Chatbot")
+
+    voice_text = speech_to_text(
+        language='en',
+        use_container_width=True,
+        just_once=True,
+        key='voice'
+    )
+
+    user_question = st.text_input(
+        "Ask farming related questions",
+        value=voice_text if voice_text else ""
+    )
+
+    if user_question:
+
+        try:
+
+            prompt = f"""
+            You are an expert AI farming assistant.
+
+            Give practical farming advice in simple language.
+
+            User Question:
+            {user_question}
+            """
+
+            response = model.generate_content(prompt)
+
+            st.success(response.text)
+
+        except Exception as e:
+
+            st.error("Gemini AI Error")
+            st.write(e)
+
+# =========================================
+# ABOUT PAGE
+# =========================================
+
+elif page == "About":
+
+    st.header("ℹ About")
+
+    st.write("""
+    AI Farming Assistant Project
+
+    Features:
+    - Disease Detection
+    - Weather Information
+    - Fertilizer Recommendation
+    - AI Chatbot
+
+    Built using:
+    - Streamlit
+    - Hugging Face API
+    - Gemini AI
+    """)
+
+# =========================================
 # WEATHER SECTION
+# =========================================
 
 st.markdown("---")
 
 st.header("🌦 Live Weather")
 
-# AUTO LOCATION DETECTION
-
-g = geocoder.ip('me')
-
-city = g.city
-
-st.success(f"📍 Detected Location: {city}")
-
-if city:
-
-    weather_url = f"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={st.secrets['WEATHER_API_KEY']}&units=metric"
-
-    weather_response = requests.get(weather_url)
-
-    weather_data = weather_response.json()
-
-    if weather_response.status_code == 200:
-
-        temperature = weather_data["main"]["temp"]
-
-        humidity = weather_data["main"]["humidity"]
-
-        weather_condition = weather_data["weather"][0]["description"]
-
-        wind_speed = weather_data["wind"]["speed"]
-
-        st.markdown(f"""
-        <div style="
-            background-color:#edf7ed;
-            padding:25px;
-            border-radius:15px;
-            margin-top:20px;
-            box-shadow:0px 0px 10px rgba(0,0,0,0.1);
-        ">
-            <h2 style="color:#1b5e20;">📍 {city.title()}</h2>
-
-            <h3>🌡 Temperature: {temperature} °C</h3>
-
-            <h3>💧 Humidity: {humidity}%</h3>
-
-            <h3>☁ Weather: {weather_condition.title()}</h3>
-
-            <h3>🌬 Wind Speed: {wind_speed} m/s</h3>
-        </div>
-        """, unsafe_allow_html=True)
-
-    else:
-
-        st.error("City not found.")
-        
-# CHATBOT SECTION
-st.markdown("---")
-
-st.header("🤖 Farming Chatbot")
-
-# Voice Input
-voice_text = speech_to_text(
-    language='en',
-    use_container_width=True,
-    just_once=True,
-    key='voice'
+city = st.selectbox(
+    "Select Your City",
+    [
+        "Lucknow",
+        "Delhi",
+        "Mumbai",
+        "Patna",
+        "Bhopal",
+        "Jaipur",
+        "Kolkata",
+        "Pune"
+    ]
 )
 
-# Text Input
-user_question = st.text_input(
-    "Ask farming related questions",
-    value=voice_text if voice_text else ""
-)
+weather_url = f"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={st.secrets['WEATHER_API_KEY']}&units=metric"
 
-# AI RESPONSE
-if user_question:
+weather_response = requests.get(weather_url)
 
-    try:
+weather_data = weather_response.json()
 
-        prompt = f"""
-        You are an expert AI farming assistant.
+if weather_response.status_code == 200:
 
-        Rules:
-        - Give short and practical farming advice.
-        - Support Hindi and English.
-        - Help farmers with crops, fertilizer, disease,
-          irrigation, pesticides, weather and soil.
+    temperature = weather_data["main"]["temp"]
 
-        User Question:
-        {user_question}
-        """
+    humidity = weather_data["main"]["humidity"]
 
-        response = model.generate_content(prompt)
+    weather_condition = weather_data["weather"][0]["description"]
 
-        st.markdown(f"""
-        <div style="
-            background-color:#edf7ed;
-            padding:20px;
-            border-radius:15px;
-            margin-top:15px;
-            box-shadow:0px 0px 10px rgba(0,0,0,0.1);
-        ">
-            <h3 style="color:#1b5e20;">
-            🤖 AI Farming Advice
-            </h3>
+    wind_speed = weather_data["wind"]["speed"]
 
-            <p style="font-size:18px;">
-            {response.text}
-            </p>
-        </div>
-        """, unsafe_allow_html=True)
+    st.markdown(f"""
+    <div style="
+        background-color:#edf7ed;
+        padding:25px;
+        border-radius:15px;
+        margin-top:20px;
+        box-shadow:0px 0px 10px rgba(0,0,0,0.1);
+    ">
+        <h2 style="color:#1b5e20;">📍 {city.title()}</h2>
 
-    except Exception as e:
+        <h3>🌡 Temperature: {temperature} °C</h3>
 
-        st.error("Gemini AI Error")
+        <h3>💧 Humidity: {humidity}%</h3>
 
-        st.write(e)
+        <h3>☁ Weather: {weather_condition.title()}</h3>
 
+        <h3>🌬 Wind Speed: {wind_speed} m/s</h3>
+    </div>
+    """, unsafe_allow_html=True)
+
+else:
+
+    st.error("City not found.")
+
+# =========================================
 # FOOTER
+# =========================================
+
 st.markdown("---")
 
 st.markdown(
