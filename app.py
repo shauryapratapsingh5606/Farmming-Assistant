@@ -85,6 +85,7 @@ page = st.sidebar.radio(
         "Home",
         "Disease Detection",
         "Fertilizer Recommendation",
+        "Soil Health",
         "AI Chatbot",
         "About"
     ]
