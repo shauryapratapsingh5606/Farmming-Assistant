@@ -109,37 +109,63 @@ headers = {
     "Content-Type": "image/jpeg"
 }
 
+# =========================
 # DISEASE INFORMATION DATABASE
+# =========================
+
 disease_info = {
 
     "rust": {
-        "cause": "Rust fungus caused by wet conditions.",
-        "treatment": "Spray Mancozeb or Copper Fungicide.",
+
+        "cause": "Rust fungus spreads in wet and humid conditions.",
+
+        "treatment": "Spray Mancozeb or Copper Oxychloride fungicide.",
+
+        "fertilizer": "Use Potash rich fertilizer and balanced NPK.",
+
         "organic": "Use neem oil spray every 7 days.",
+
         "prevention": "Avoid excess watering and improve airflow."
     },
 
     "blight": {
-        "cause": "Blight spreads due to fungus and humidity.",
-        "treatment": "Use Chlorothalonil fungicide.",
-        "organic": "Remove infected leaves and use compost tea.",
-        "prevention": "Keep leaves dry and maintain spacing."
+
+        "cause": "Blight disease spreads due to fungus and humidity.",
+
+        "treatment": "Use Chlorothalonil fungicide spray.",
+
+        "fertilizer": "Apply Nitrogen and Potassium carefully.",
+
+        "organic": "Remove infected leaves and use compost tea spray.",
+
+        "prevention": "Keep leaves dry and maintain plant spacing."
     },
 
     "leaf scorch": {
-        "cause": "Leaf scorch occurs due to heat or fungal infection.",
-        "treatment": "Use balanced fertilizer and fungicide.",
-        "organic": "Use organic compost and proper irrigation.",
+
+        "cause": "Leaf scorch occurs because of heat stress or fungal infection.",
+
+        "treatment": "Use balanced fertilizer and fungicide spray.",
+
+        "fertilizer": "Apply organic compost and micronutrients.",
+
+        "organic": "Use vermicompost and proper irrigation.",
+
         "prevention": "Avoid water stress and extreme heat."
     },
 
     "healthy": {
-        "cause": "Your crop is healthy.",
-        "treatment": "No treatment needed.",
-        "organic": "Maintain good farming practices.",
-        "prevention": "Continue regular monitoring."
-    }
 
+        "cause": "Your crop is healthy.",
+
+        "treatment": "No treatment needed.",
+
+        "fertilizer": "Continue balanced fertilizer schedule.",
+
+        "organic": "Maintain organic compost usage.",
+
+        "prevention": "Regular monitoring and irrigation."
+    }
 }
 
 # IMAGE UPLOAD
@@ -198,6 +224,13 @@ if uploaded_file is not None:
                             st.warning(
                                 f"Cause: {info['cause']}"
                             )
+                            st.info(f"Treatment: {info['treatment']}")
+
+st.success(f"Recommended Fertilizer: {info['fertilizer']}")
+
+st.success(f"Organic Solution: {info['organic']}")
+
+st.warning(f"Prevention: {info['prevention']}")
 
                             st.info(
                                 f"Treatment: {info['treatment']}"
