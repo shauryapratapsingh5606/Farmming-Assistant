@@ -420,32 +420,3 @@ st.markdown(
     "<div class='footer'>Made with ❤️ for Farmers</div>",
     unsafe_allow_html=True
 )
-# =========================
-# FERTILIZER RECOMMENDATION
-# =========================
-
- elif page == "Fertilizer Recommendation":
-
-     st.title("🌾 Smart Fertilizer Recommendation")
-
-     crop = st.selectbox(
-
-         "Select Crop",
-
-         ["Wheat", "Rice", "Maize", "Sugarcane"]
-
-     )
-
-     soil = st.selectbox(
-
-         "Select Soil Type",
-
-         ["Black Soil", "Sandy Soil", "Clay Soil"]
-
-     )
-
-     if st.button("Get Fertilizer Recommendation"):
-
-         recommendation = fertilizer_data[crop][soil]
-
-         st.success(f"Recommended Fertilizer: {recommendation}")
