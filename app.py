@@ -199,6 +199,7 @@ fertilizer_data = {
         "Clay Soil": "Use Nitrogen fertilizer"
     }
 }
+
 # =========================
 # SOIL HEALTH DATABASE
 # =========================
@@ -236,6 +237,30 @@ soil_data = {
         "fertilizer": "Use Organic Matter and Gypsum",
 
         "irrigation": "Low irrigation required"
+    }
+}
+# =========================
+# IRRIGATION DATABASE
+# =========================
+
+irrigation_data = {
+
+    "Black Soil": {
+        "Sunny": "Irrigate every 4-5 days",
+        "Rainy": "No irrigation needed",
+        "Cloudy": "Light irrigation after 6 days"
+    },
+
+    "Sandy Soil": {
+        "Sunny": "Irrigate daily due to low water retention",
+        "Rainy": "Minimal irrigation needed",
+        "Cloudy": "Irrigate every 2-3 days"
+    },
+
+    "Clay Soil": {
+        "Sunny": "Irrigate every 6-7 days",
+        "Rainy": "Avoid irrigation",
+        "Cloudy": "Moderate irrigation after 5 days"
     }
 }
 
@@ -395,6 +420,35 @@ elif page == "Soil Health":
         st.warning(f"💊 Fertilizer Advice: {data['fertilizer']}")
 
         st.success(f"💧 Irrigation Advice: {data['irrigation']}")
+        # =========================================
+# SMART IRRIGATION SYSTEM
+# =========================================
+
+elif page == "Smart Irrigation":
+
+    st.header("💧 Smart Irrigation System")
+
+    soil = st.selectbox(
+
+        "Select Soil Type",
+
+        ["Black Soil", "Sandy Soil", "Clay Soil"]
+
+    )
+
+    weather = st.selectbox(
+
+        "Select Weather Condition",
+
+        ["Sunny", "Rainy", "Cloudy"]
+
+    )
+
+    if st.button("Get Irrigation Advice"):
+
+        advice = irrigation_data[soil][weather]
+
+        st.success(f"💧 Irrigation Advice: {advice}")
 
 
 # =========================================
