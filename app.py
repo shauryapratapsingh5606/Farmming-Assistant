@@ -226,11 +226,11 @@ if uploaded_file is not None:
                             )
                             st.info(f"Treatment: {info['treatment']}")
 
-st.success(f"Recommended Fertilizer: {info['fertilizer']}")
+                            st.success(f"Recommended Fertilizer: {info['fertilizer']}")
 
-st.success(f"Organic Solution: {info['organic']}")
+                            st.success(f"Organic Solution: {info['organic']}")
 
-st.warning(f"Prevention: {info['prevention']}")
+                            st.warning(f"Prevention: {info['prevention']}")
 
                             st.info(
                                 f"Treatment: {info['treatment']}"
