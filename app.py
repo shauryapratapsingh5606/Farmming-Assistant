@@ -84,6 +84,7 @@ page = st.sidebar.radio(
     [
         "Home",
         "Disease Detection",
+        "Fertilizer Recommendation",
         "AI Chatbot",
         "About"
     ]
@@ -165,6 +166,36 @@ disease_info = {
         "organic": "Maintain organic compost usage.",
 
         "prevention": "Regular monitoring and irrigation."
+    }
+}
+# =========================
+# FERTILIZER DATABASE
+# =========================
+
+fertilizer_data = {
+
+    "Wheat": {
+        "Black Soil": "Use Urea + DAP + Potash",
+        "Sandy Soil": "Use Organic Compost + NPK",
+        "Clay Soil": "Use Nitrogen rich fertilizer"
+    },
+
+    "Rice": {
+        "Black Soil": "Use NPK 10-26-26",
+        "Sandy Soil": "Use Vermicompost + Potash",
+        "Clay Soil": "Use Urea in small amounts"
+    },
+
+    "Maize": {
+        "Black Soil": "Use Nitrogen and Potassium",
+        "Sandy Soil": "Use Compost and Urea",
+        "Clay Soil": "Use Balanced NPK"
+    },
+
+    "Sugarcane": {
+        "Black Soil": "Use Potassium rich fertilizer",
+        "Sandy Soil": "Use Organic manure",
+        "Clay Soil": "Use Nitrogen fertilizer"
     }
 }
 
@@ -389,3 +420,32 @@ st.markdown(
     "<div class='footer'>Made with ❤️ for Farmers</div>",
     unsafe_allow_html=True
 )
+# =========================
+# FERTILIZER RECOMMENDATION
+# =========================
+
+elif page == "Fertilizer Recommendation":
+
+    st.title("🌾 Smart Fertilizer Recommendation")
+
+    crop = st.selectbox(
+
+        "Select Crop",
+
+        ["Wheat", "Rice", "Maize", "Sugarcane"]
+
+    )
+
+    soil = st.selectbox(
+
+        "Select Soil Type",
+
+        ["Black Soil", "Sandy Soil", "Clay Soil"]
+
+    )
+
+    if st.button("Get Fertilizer Recommendation"):
+
+        recommendation = fertilizer_data[crop][soil]
+
+        st.success(f"Recommended Fertilizer: {recommendation}")
