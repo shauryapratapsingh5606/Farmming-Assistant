@@ -76,7 +76,7 @@ h2, h3 {
 st.sidebar.title("🌱 Farming Assistant")
 # LANGUAGE SELECTOR
 
-language = st.sidebar.selectbox(
+st.session_state["language"] = st.sidebar.selectbox(
 
     "🌍 Select Language",
 
