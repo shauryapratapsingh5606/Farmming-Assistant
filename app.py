@@ -771,6 +771,14 @@ weather_data = weather_response.json()
 if weather_response.status_code == 200:
 
     temperature = weather_data["main"]["temp"]
+    
+    temp_label = weather_labels[language]["temp"]
+
+humidity_label = weather_labels[language]["humidity"]
+
+weather_label = weather_labels[language]["weather"]
+
+wind_label = weather_labels[language]["wind"]
 
     humidity = weather_data["main"]["humidity"]
 
