@@ -754,7 +754,7 @@ if weather_response.status_code == 200:
     border-radius:15px;
 ">
 
-<h2>📍 {city}</h2>
+<h2 style="color:#1b5e20;">📍 {city.title()}</h2>
 
 <h3>🌡 {weather_labels[language]['temp']}: {temperature} °C</h3>
 
