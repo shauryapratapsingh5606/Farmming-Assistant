@@ -795,24 +795,13 @@ if weather_response.status_code == 200:
 
 <h2 style="color:#1b5e20;">📍 {city.title()}</h2>
 
-<h3>🌡 {weather_label}: {temperature} °C</h3>
+<h3>🌡 {temp_label}: {temperature} °C</h3>
 
-<h3>💧 {weather_label}: {humidity}%</h3>
+<h3>💧 {humidity_label}: {humidity}%</h3>
 
-<h3>☁ {weather_label]}: {weather_condition}</h3>
+<h3>☁ {weather_label}: {weather_condition}</h3>
 
-<h3>🌬 {weather_label}: {wind_speed} m/s</h3>
+<h3>🌬 {wind_label}: {wind_speed} m/s</h3>
 
 </div>
 """, unsafe_allow_html=True)
-
-# =========================================
-# FOOTER
-# =========================================
-
-st.markdown("---")
-
-st.markdown(
-    "<div class='footer'>Made with ❤️ for Farmers</div>",
-    unsafe_allow_html=True
-)
