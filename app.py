@@ -226,54 +226,110 @@ disease_info = {
 
     "rust": {
 
-        "cause": "Rust fungus spreads in wet and humid conditions.",
+        "English": {
+            "cause": "Rust fungus spreads in wet and humid conditions.",
+            "treatment": "Spray Mancozeb or Copper Oxychloride fungicide.",
+            "fertilizer": "Use Potash rich fertilizer and balanced NPK.",
+            "organic": "Use neem oil spray every 7 days.",
+            "prevention": "Avoid excess watering and improve airflow."
+        },
 
-        "treatment": "Spray Mancozeb or Copper Oxychloride fungicide.",
+        "हिन्दी": {
+            "cause": "रस्ट फंगस गीले और नमी वाले मौसम में फैलता है।",
+            "treatment": "मैनकोजेब या कॉपर ऑक्सीक्लोराइड का छिड़काव करें।",
+            "fertilizer": "पोटाश युक्त और संतुलित एनपीके खाद का उपयोग करें।",
+            "organic": "हर 7 दिन पर नीम तेल का छिड़काव करें।",
+            "prevention": "अधिक पानी देने से बचें और हवा का प्रवाह बनाए रखें।"
+        },
 
-        "fertilizer": "Use Potash rich fertilizer and balanced NPK.",
-
-        "organic": "Use neem oil spray every 7 days.",
-
-        "prevention": "Avoid excess watering and improve airflow."
+        "भोजपुरी": {
+            "cause": "रस्ट फंगस गीलापन आ नमी में तेजी से फइलाला।",
+            "treatment": "मैनकोजेब या कॉपर दवाई के छिड़काव करीं।",
+            "fertilizer": "पोटाश वाला खाद आ संतुलित एनपीके डालल जरूरी बा।",
+            "organic": "हर 7 दिन पर नीम तेल छिड़कीं।",
+            "prevention": "ज्यादा पानी मत दीं आ हवा के रास्ता खुला रखीं।"
+        }
     },
 
     "blight": {
 
-        "cause": "Blight disease spreads due to fungus and humidity.",
+        "English": {
+            "cause": "Blight disease spreads due to fungus and humidity.",
+            "treatment": "Use Chlorothalonil fungicide spray.",
+            "fertilizer": "Apply Nitrogen and Potassium carefully.",
+            "organic": "Remove infected leaves and use compost tea spray.",
+            "prevention": "Keep leaves dry and maintain plant spacing."
+        },
 
-        "treatment": "Use Chlorothalonil fungicide spray.",
+        "हिन्दी": {
+            "cause": "ब्लाइट रोग फंगस और नमी के कारण फैलता है।",
+            "treatment": "क्लोरोथालोनिल फफूंदनाशक का छिड़काव करें।",
+            "fertilizer": "नाइट्रोजन और पोटाश संतुलित मात्रा में दें।",
+            "organic": "संक्रमित पत्तियां हटाएं और कम्पोस्ट चाय स्प्रे करें।",
+            "prevention": "पत्तियों को सूखा रखें और दूरी बनाए रखें।"
+        },
 
-        "fertilizer": "Apply Nitrogen and Potassium carefully.",
-
-        "organic": "Remove infected leaves and use compost tea spray.",
-
-        "prevention": "Keep leaves dry and maintain plant spacing."
+        "भोजपुरी": {
+            "cause": "ब्लाइट रोग फंगस आ नमी से फइलाला।",
+            "treatment": "क्लोरोथालोनिल दवाई के छिड़काव करीं।",
+            "fertilizer": "नाइट्रोजन आ पोटाश संतुलित मात्रा में दीं।",
+            "organic": "बीमार पत्तियां हटाईं आ कम्पोस्ट स्प्रे करीं।",
+            "prevention": "पत्तियां सूखी रखीं आ दूरी बनाके रखीं।"
+        }
     },
 
     "leaf scorch": {
 
-        "cause": "Leaf scorch occurs because of heat stress or fungal infection.",
+        "English": {
+            "cause": "Leaf scorch occurs because of heat stress or fungal infection.",
+            "treatment": "Use balanced fertilizer and fungicide spray.",
+            "fertilizer": "Apply organic compost and micronutrients.",
+            "organic": "Use vermicompost and proper irrigation.",
+            "prevention": "Avoid water stress and extreme heat."
+        },
 
-        "treatment": "Use balanced fertilizer and fungicide spray.",
+        "हिन्दी": {
+            "cause": "लीफ स्कॉर्च गर्मी और फंगल संक्रमण के कारण होता है।",
+            "treatment": "संतुलित उर्वरक और फफूंदनाशक का उपयोग करें।",
+            "fertilizer": "जैविक खाद और सूक्ष्म पोषक तत्व डालें।",
+            "organic": "वर्मी कम्पोस्ट और सही सिंचाई करें।",
+            "prevention": "पानी की कमी और अधिक गर्मी से बचाएं।"
+        },
 
-        "fertilizer": "Apply organic compost and micronutrients.",
-
-        "organic": "Use vermicompost and proper irrigation.",
-
-        "prevention": "Avoid water stress and extreme heat."
+        "भोजपुरी": {
+            "cause": "ई रोग गर्मी आ फंगस संक्रमण से होला।",
+            "treatment": "संतुलित खाद आ फफूंद दवाई के छिड़काव करीं।",
+            "fertilizer": "जैविक खाद आ सूक्ष्म पोषक तत्व डालीं।",
+            "organic": "वर्मी कम्पोस्ट आ सही सिंचाई करीं।",
+            "prevention": "बहुत गर्मी आ पानी के कमी से बचाईं।"
+        }
     },
 
     "healthy": {
 
-        "cause": "Your crop is healthy.",
+        "English": {
+            "cause": "Your crop is healthy.",
+            "treatment": "No treatment needed.",
+            "fertilizer": "Continue balanced fertilizer schedule.",
+            "organic": "Maintain organic compost usage.",
+            "prevention": "Regular monitoring and irrigation."
+        },
 
-        "treatment": "No treatment needed.",
+        "हिन्दी": {
+            "cause": "आपकी फसल स्वस्थ है।",
+            "treatment": "किसी उपचार की आवश्यकता नहीं है।",
+            "fertilizer": "संतुलित खाद देना जारी रखें।",
+            "organic": "जैविक खाद का उपयोग बनाए रखें।",
+            "prevention": "नियमित निगरानी और सिंचाई करें।"
+        },
 
-        "fertilizer": "Continue balanced fertilizer schedule.",
-
-        "organic": "Maintain organic compost usage.",
-
-        "prevention": "Regular monitoring and irrigation."
+        "भोजपुरी": {
+            "cause": "रउआ के फसल स्वस्थ बा।",
+            "treatment": "कवनो इलाज के जरूरत नइखे।",
+            "fertilizer": "संतुलित खाद देते रहीं।",
+            "organic": "जैविक खाद के उपयोग जारी रखीं।",
+            "prevention": "नियमित देखभाल आ सिंचाई करीं।"
+        }
     }
 }
 # =========================
@@ -444,7 +500,7 @@ elif page == "Disease Detection":
 
                             if key in disease.lower():
 
-                                info = disease_info[key]
+                                info = disease_info[key][language]
 
                                 st.warning(f"Cause: {info['cause']}")
 
@@ -622,6 +678,36 @@ elif page == "About":
     - Hugging Face API
     - Gemini AI
     """)
+    weather_labels = {
+
+    "English": {
+        "temp": "Temperature",
+        "humidity": "Humidity",
+        "weather": "Weather",
+        "wind": "Wind Speed"
+    },
+
+    "हिन्दी": {
+        "temp": "तापमान",
+        "humidity": "नमी",
+        "weather": "मौसम",
+        "wind": "हवा की गति"
+    },
+
+    "भोजपुरी": {
+        "temp": "तापमान",
+        "humidity": "नमी",
+        "weather": "मौसम",
+        "wind": "हवा के रफ्तार"
+    },
+
+    "अवधी": {
+        "temp": "तापमान",
+        "humidity": "नमी",
+        "weather": "मौसम",
+        "wind": "हवा की रफ्तार"
+    }
+}
 
 # =========================================
 # WEATHER SECTION
@@ -662,28 +748,24 @@ if weather_response.status_code == 200:
     wind_speed = weather_data["wind"]["speed"]
 
     st.markdown(f"""
-    <div style="
-        background-color:#edf7ed;
-        padding:25px;
-        border-radius:15px;
-        margin-top:20px;
-        box-shadow:0px 0px 10px rgba(0,0,0,0.1);
-    ">
-        <h2 style="color:#1b5e20;">📍 {city.title()}</h2>
+<div style="
+    background-color:#edf7ed;
+    padding:25px;
+    border-radius:15px;
+">
 
-        <h3>🌡 Temperature: {temperature} °C</h3>
+<h2>📍 {city}</h2>
 
-        <h3>💧 Humidity: {humidity}%</h3>
+<h3>🌡 {weather_labels[language]['temp']}: {temperature} °C</h3>
 
-        <h3>☁ Weather: {weather_condition.title()}</h3>
+<h3>💧 {weather_labels[language]['humidity']}: {humidity}%</h3>
 
-        <h3>🌬 Wind Speed: {wind_speed} m/s</h3>
-    </div>
-    """, unsafe_allow_html=True)
+<h3>☁ {weather_labels[language]['weather']}: {weather_condition}</h3>
 
-else:
+<h3>🌬 {weather_labels[language]['wind']}: {wind_speed} m/s</h3>
 
-    st.error("City not found.")
+</div>
+""", unsafe_allow_html=True)
 
 # =========================================
 # FOOTER
