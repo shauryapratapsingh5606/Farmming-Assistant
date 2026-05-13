@@ -163,6 +163,40 @@ page = st.sidebar.radio(
         translations[language]["about"]
     ]
 )
+# =========================================
+# LANGUAGE PAGE MAPPING
+# =========================================
+
+page_mapping = {
+
+    "Home": "Home",
+    "होम": "Home",
+    "घर": "Home",
+
+    "Disease Detection": "Disease Detection",
+    "रोग पहचान": "Disease Detection",
+    "रोग पहिचान": "Disease Detection",
+
+    "Fertilizer Recommendation": "Fertilizer Recommendation",
+    "उर्वरक सुझाव": "Fertilizer Recommendation",
+    "खाद सलाह": "Fertilizer Recommendation",
+
+    "Soil Health": "Soil Health",
+    "मिट्टी स्वास्थ्य": "Soil Health",
+    "मिट्टी जाँच": "Soil Health",
+
+    "Smart Irrigation": "Smart Irrigation",
+    "सिंचाई सलाह": "Smart Irrigation",
+
+    "AI Chatbot": "AI Chatbot",
+    "एआई चैटबॉट": "AI Chatbot",
+    "एआई चैट": "AI Chatbot",
+
+    "About": "About",
+    "जानकारी": "About"
+}
+
+page = page_mapping.get(page, "Home")
 
 # TITLE
 st.title("🌱 AI Farming Assistant")
