@@ -87,7 +87,6 @@ st.session_state["language"] = st.sidebar.selectbox(
         "अवधी"
     ]
 )
-selected_language = language
 # =========================================
 # LANGUAGE TRANSLATIONS
 # =========================================
