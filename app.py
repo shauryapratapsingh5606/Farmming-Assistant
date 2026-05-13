@@ -774,11 +774,11 @@ if weather_response.status_code == 200:
     
     temp_label = weather_labels[language]["temp"]
 
-humidity_label = weather_labels[language]["humidity"]
+    humidity_label = weather_labels[language]["humidity"]
 
-weather_label = weather_labels[language]["weather"]
+    weather_label = weather_labels[language]["weather"]
 
-wind_label = weather_labels[language]["wind"]
+    wind_label = weather_labels[language]["wind"]
 
     humidity = weather_data["main"]["humidity"]
 
