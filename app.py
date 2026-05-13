@@ -778,13 +778,13 @@ if weather_response.status_code == 200:
 
     wind_speed = weather_data["wind"]["speed"]
 
-    temp_label = weather_labels[language]["temp"]
+    temp_label = weather_labels[selected_language]["temp"]
 
-    humidity_label = weather_labels[language]["humidity"]
+    humidity_label = weather_labels[selected_language]["humidity"]
 
-    weather_label = weather_labels[language]["weather"]
+    weather_label = weather_labels[selected_language]["weather"]
 
-    wind_label = weather_labels[language]["wind"]
+    wind_label = weather_labels[selected_language]["wind"]
 
     st.markdown(f"""
 <div style="
