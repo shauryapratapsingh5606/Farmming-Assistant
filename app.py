@@ -771,6 +771,12 @@ weather_data = weather_response.json()
 if weather_response.status_code == 200:
 
     temperature = weather_data["main"]["temp"]
+
+    humidity = weather_data["main"]["humidity"]
+
+    weather_condition = weather_data["weather"][0]["description"]
+
+    wind_speed = weather_data["wind"]["speed"]
     
     temp_label = weather_labels[language]["temp"]
 
@@ -779,12 +785,6 @@ if weather_response.status_code == 200:
     weather_label = weather_labels[language]["weather"]
 
     wind_label = weather_labels[language]["wind"]
-
-    humidity = weather_data["main"]["humidity"]
-
-    weather_condition = weather_data["weather"][0]["description"]
-
-    wind_speed = weather_data["wind"]["speed"]
 
     st.markdown(f"""
 <div style="
