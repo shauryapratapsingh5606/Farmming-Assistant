@@ -708,6 +708,36 @@ elif page == "About":
         "wind": "हवा की रफ्तार"
     }
 }
+    weather_labels = {
+
+    "English": {
+        "temp": "Temperature",
+        "humidity": "Humidity",
+        "weather": "Weather",
+        "wind": "Wind Speed"
+    },
+
+    "हिन्दी": {
+        "temp": "तापमान",
+        "humidity": "नमी",
+        "weather": "मौसम",
+        "wind": "हवा की गति"
+    },
+
+    "भोजपुरी": {
+        "temp": "तापमान",
+        "humidity": "नमी",
+        "weather": "मौसम",
+        "wind": "हवा के रफ्तार"
+    },
+
+    "अवधी": {
+        "temp": "तापमान",
+        "humidity": "नमी",
+        "weather": "मौसम",
+        "wind": "हवा की रफ्तार"
+    }
+}
 
 # =========================================
 # WEATHER SECTION
