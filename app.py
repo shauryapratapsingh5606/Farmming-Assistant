@@ -777,7 +777,7 @@ if weather_response.status_code == 200:
     weather_condition = weather_data["weather"][0]["description"]
 
     wind_speed = weather_data["wind"]["speed"]
-    
+
     temp_label = weather_labels[language]["temp"]
 
     humidity_label = weather_labels[language]["humidity"]
