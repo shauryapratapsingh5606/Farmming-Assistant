@@ -1,5 +1,6 @@
 import streamlit as st
 import requests
+import sqlite3
 
 # =========================================
 # PAGE CONFIG
@@ -10,6 +11,30 @@ st.set_page_config(
     page_icon="🌱",
     layout="wide"
 )
+# =========================================
+# DATABASE CONNECTION
+# =========================================
+
+conn = sqlite3.connect("farmers.db")
+
+cursor = conn.cursor()
+
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS farmers (
+
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+
+    name TEXT,
+
+    mobile TEXT,
+
+    village TEXT,
+
+    crop TEXT
+)
+""")
+
+conn.commit()
 
 # =========================================
 # SIDEBAR
@@ -128,6 +153,37 @@ if page == labels[language]["home"]:
     st.title("🌱 AI Farming Assistant")
 
     st.write("Upload crop image and get farming support.")
+    st.markdown("---")
+
+st.header("👨‍🌾 Farmer Registration")
+
+farmer_name = st.text_input("Farmer Name")
+
+farmer_mobile = st.text_input("Mobile Number")
+
+farmer_village = st.text_input("Village")
+
+farmer_crop = st.text_input("Main Crop")
+
+if st.button("Save Farmer Data"):
+
+    cursor.execute("""
+
+    INSERT INTO farmers (name, mobile, village, crop)
+
+    VALUES (?, ?, ?, ?)
+
+    """, (
+
+        farmer_name,
+        farmer_mobile,
+        farmer_village,
+        farmer_crop
+    ))
+
+    conn.commit()
+
+    st.success("Farmer Data Saved Successfully ✅")
 
     st.markdown("---")
 
