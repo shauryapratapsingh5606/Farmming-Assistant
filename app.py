@@ -284,23 +284,25 @@ farmer_village = st.text_input(
     "Village",
     key="farmer_village_input"
 )
-
 farmer_crop = st.text_input(
     "Main Crop",
     key="farmer_crop_input"
 )
- farmer_image = st.file_uploader(
-        "Upload Farmer Image",
-        type=["jpg", "png", "jpeg"]
-        key="farmer_image_upload"
-    )
 
-    if farmer_image is not None:
+farmer_image = st.file_uploader(
+    "Upload Farmer Image",
+    type=["jpg", "png", "jpeg"],
+    key="farmer_image_upload"
+)
 
-        st.image(farmer_image, width=200)
+if farmer_image is not None:
 
-    if st.button("Register Farmer"
-        key="register_farmer_btn"):
+    st.image(farmer_image, width=200)
+
+if st.button(
+    "Register Farmer",
+    key="register_farmer_btn"
+):
 
         image_name = ""
 
