@@ -70,6 +70,7 @@ labels = {
         "irrigation": "Smart Irrigation",
         "chatbot": "AI Chatbot",
         "about": "About",
+        "register": "👨‍🌾 Farmer Registration",
         "weather": "🌦 Live Weather",
         "city": "Select Your City",
         "temp": "Temperature",
@@ -86,6 +87,7 @@ labels = {
         "irrigation": "सिंचाई सलाह",
         "chatbot": "एआई चैट",
         "about": "जानकारी",
+        "register": "👨‍🌾 किसान पंजीकरण",
         "weather": "🌦 लाइव मौसम",
         "city": "अपना शहर चुनें",
         "temp": "तापमान",
@@ -102,6 +104,7 @@ labels = {
         "irrigation": "सिंचाई सलाह",
         "chatbot": "एआई चैट",
         "about": "जानकारी",
+        "register": "👨‍🌾 किसान रजिस्ट्रेशन",
         "weather": "🌦 जिंदा मौसम",
         "city": "अपना शहर चुनीं",
         "temp": "तापमान",
@@ -118,6 +121,7 @@ labels = {
         "irrigation": "सिंचाई सलाह",
         "chatbot": "एआई चैट",
         "about": "जानकारी",
+        "register": "👨‍🌾 किसान पंजीकरण",
         "weather": "🌦 जिंदा मौसम",
         "city": "अपना शहर चुनौ",
         "temp": "तापमान",
@@ -135,6 +139,7 @@ page = st.sidebar.radio(
     "Navigation",
     [
         labels[language]["home"],
+        labels[language]["register"],
         labels[language]["disease"],
         labels[language]["fertilizer"],
         labels[language]["soil"],
@@ -258,6 +263,58 @@ if st.button("Save Farmer Data"):
     else:
 
         st.error("Weather data not found.")
+        # =========================================
+# FARMER REGISTRATION
+# =========================================
+
+elif page == labels[language]["register"]:
+
+    st.title(labels[language]["register"])
+
+    farmer_name = st.text_input("Farmer Name")
+
+    farmer_mobile = st.text_input("Mobile Number")
+
+    farmer_village = st.text_input("Village")
+
+    farmer_crop = st.text_input("Main Crop")
+
+    farmer_image = st.file_uploader(
+        "Upload Farmer Image",
+        type=["jpg", "png", "jpeg"]
+    )
+
+    if farmer_image is not None:
+
+        st.image(farmer_image, width=200)
+
+    if st.button("Register Farmer"):
+
+        image_name = ""
+
+        if farmer_image is not None:
+
+            image_name = farmer_image.name
+
+        cursor.execute("""
+
+        INSERT INTO farmers
+        (name, mobile, village, crop, image)
+
+        VALUES (?, ?, ?, ?, ?)
+
+        """, (
+
+            farmer_name,
+            farmer_mobile,
+            farmer_village,
+            farmer_crop,
+            image_name
+        ))
+
+        conn.commit()
+
+        st.success("Farmer Registered Successfully ✅")
 
 # =========================================
 # DISEASE PAGE
