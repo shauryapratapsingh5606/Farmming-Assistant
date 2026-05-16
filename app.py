@@ -289,8 +289,7 @@ farmer_crop = st.text_input(
     "Main Crop",
     key="farmer_crop_input"
 )
-
-    farmer_image = st.file_uploader(
+ farmer_image = st.file_uploader(
         "Upload Farmer Image",
         type=["jpg", "png", "jpeg"]
         key="farmer_image_upload"
