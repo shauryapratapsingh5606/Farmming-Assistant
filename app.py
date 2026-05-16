@@ -261,7 +261,6 @@ if st.button("Save Farmer Data"):
         """, unsafe_allow_html=True)
 
     else:
-
         st.error("Weather data not found.")
         # =========================================
 # FARMER REGISTRATION
@@ -271,24 +270,38 @@ elif page == labels[language]["register"]:
 
     st.title(labels[language]["register"])
 
-    farmer_name = st.text_input("Farmer Name")
+    farmer_name = st.text_input(
+    "Farmer Name",
+    key="farmer_name_input"
+)
 
-    farmer_mobile = st.text_input("Mobile Number")
+farmer_mobile = st.text_input(
+    "Mobile Number",
+    key="farmer_mobile_input"
+)
 
-    farmer_village = st.text_input("Village")
+farmer_village = st.text_input(
+    "Village",
+    key="farmer_village_input"
+)
 
-    farmer_crop = st.text_input("Main Crop")
+farmer_crop = st.text_input(
+    "Main Crop",
+    key="farmer_crop_input"
+)
 
     farmer_image = st.file_uploader(
         "Upload Farmer Image",
         type=["jpg", "png", "jpeg"]
+        key="farmer_image_upload"
     )
 
     if farmer_image is not None:
 
         st.image(farmer_image, width=200)
 
-    if st.button("Register Farmer"):
+    if st.button("Register Farmer"
+        key="register_farmer_btn"):
 
         image_name = ""
 
