@@ -1,6 +1,7 @@
 import streamlit as st
 import requests
 import sqlite3
+import os
 
 # =========================================
 # PAGE CONFIG
@@ -38,6 +39,13 @@ CREATE TABLE IF NOT EXISTS farmers (
 """)
 
 conn.commit()
+# =========================================
+# IMAGE FOLDER
+# =========================================
+
+if not os.path.exists("farmer_images"):
+
+    os.makedirs("farmer_images")
 
 # =========================================
 # SIDEBAR
@@ -265,6 +273,15 @@ elif page == labels[language]["register"]:
         if farmer_image is not None:
 
             image_name = farmer_image.name
+
+image_path = os.path.join(
+    "farmer_images",
+    image_name
+)
+
+with open(image_path, "wb") as f:
+
+    f.write(farmer_image.getbuffer())
 
         cursor.execute(
             """
