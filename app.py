@@ -283,7 +283,7 @@ with open(image_path, "wb") as f:
 
     f.write(farmer_image.getbuffer())
 
-      cursor.execute(
+        cursor.execute(
             """
             INSERT INTO farmers
             (name, mobile, village, crop, image)
