@@ -262,46 +262,52 @@ elif page == labels[language]["register"]:
         key="farmer_image"
     )
 
-       if farmer_image is not None:
+    farmer_image = st.file_uploader(
+    "Upload Farmer Image",
+    type=["jpg", "png", "jpeg"],
+    key="farmer_image"
+)
 
-        st.image(farmer_image, width=200)
+if farmer_image is not None:
 
-        if st.button("Register Farmer"):
+    st.image(farmer_image, width=200)
 
-        image_name = ""
+if st.button("Register Farmer"):
 
-        if farmer_image is not None:
+    image_name = ""
 
-            image_name = farmer_image.name
+    if farmer_image is not None:
 
-    image_path = os.path.join(
-    "farmer_images",
-    image_name
-   )
+        image_name = farmer_image.name
 
-    with open(image_path, "wb") as f:
-
-       f.write(farmer_image.getbuffer())
-
-        cursor.execute(
-            """
-            INSERT INTO farmers
-            (name, mobile, village, crop, image)
-
-            VALUES (?, ?, ?, ?, ?)
-            """,
-            (
-                farmer_name,
-                farmer_mobile,
-                farmer_village,
-                farmer_crop,
-                image_name
-            )
+        image_path = os.path.join(
+            "farmer_images",
+            image_name
         )
 
-        conn.commit()
+        with open(image_path, "wb") as f:
 
-        st.success("Farmer Registered Successfully ✅")
+            f.write(farmer_image.getbuffer())
+
+    cursor.execute(
+        """
+        INSERT INTO farmers
+        (name, mobile, village, crop, image)
+
+        VALUES (?, ?, ?, ?, ?)
+        """,
+        (
+            farmer_name,
+            farmer_mobile,
+            farmer_village,
+            farmer_crop,
+            image_name
+        )
+    )
+
+    conn.commit()
+
+    st.success("Farmer Registered Successfully ✅")
 
         st.markdown("---")
 
