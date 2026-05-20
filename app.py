@@ -262,11 +262,11 @@ elif page == labels[language]["register"]:
         key="farmer_image"
     )
 
-    if farmer_image is not None:
+       if farmer_image is not None:
 
         st.image(farmer_image, width=200)
 
-    if st.button("Register Farmer"):
+        if st.button("Register Farmer"):
 
         image_name = ""
 
@@ -274,14 +274,14 @@ elif page == labels[language]["register"]:
 
             image_name = farmer_image.name
 
-image_path = os.path.join(
+    image_path = os.path.join(
     "farmer_images",
     image_name
-)
+   )
 
-with open(image_path, "wb") as f:
+    with open(image_path, "wb") as f:
 
-    f.write(farmer_image.getbuffer())
+       f.write(farmer_image.getbuffer())
 
         cursor.execute(
             """
