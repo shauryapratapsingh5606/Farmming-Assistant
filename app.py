@@ -262,66 +262,81 @@ elif page == labels[language]["register"]:
         key="farmer_image"
     )
 
-    farmer_image = st.file_uploader(
-    "Upload Farmer Image",
-    type=["jpg", "png", "jpeg"],
-    key="farmer_image"
-)
-
-if farmer_image is not None:
-
-    st.image(farmer_image, width=200)
-
-if st.button("Register Farmer"):
-
-    image_name = ""
-
     if farmer_image is not None:
 
-        image_name = farmer_image.name
+        st.image(farmer_image, width=200)
 
-        image_path = os.path.join(
-            "farmer_images",
-            image_name
+    if st.button(
+        "Register Farmer",
+        key="register_farmer_btn"
+    ):
+
+        image_name = ""
+
+        if farmer_image is not None:
+
+            image_name = farmer_image.name
+
+            image_path = os.path.join(
+                "farmer_images",
+                image_name
+            )
+
+            with open(image_path, "wb") as f:
+
+                f.write(
+                    farmer_image.getbuffer()
+                )
+
+        cursor.execute(
+            """
+            INSERT INTO farmers
+            (name, mobile, village, crop, image)
+
+            VALUES (?, ?, ?, ?, ?)
+            """,
+            (
+                farmer_name,
+                farmer_mobile,
+                farmer_village,
+                farmer_crop,
+                image_name
+            )
         )
 
-        with open(image_path, "wb") as f:
+        conn.commit()
 
-            f.write(farmer_image.getbuffer())
-
-    cursor.execute(
-        """
-        INSERT INTO farmers
-        (name, mobile, village, crop, image)
-
-        VALUES (?, ?, ?, ?, ?)
-        """,
-        (
-            farmer_name,
-            farmer_mobile,
-            farmer_village,
-            farmer_crop,
-            image_name
+        st.success(
+            "Farmer Registered Successfully ✅"
         )
-    )
-    conn.commit()
-
-    st.success("Farmer Registered Successfully ✅")
 
     st.markdown("---")
 
     st.subheader("📋 Registered Farmers")
 
-    cursor.execute("SELECT * FROM farmers")
+    cursor.execute(
+        "SELECT * FROM farmers"
+    )
 
     farmers_data = cursor.fetchall()
 
     for farmer in farmers_data:
 
-        st.write(f"👨‍🌾 Name: {farmer[1]}")
-        st.write(f"📱 Mobile: {farmer[2]}")
-        st.write(f"🏡 Village: {farmer[3]}")
-        st.write(f"🌾 Crop: {farmer[4]}")
+        st.write(
+            f"👨‍🌾 Name: {farmer[1]}"
+        )
+
+        st.write(
+            f"📱 Mobile: {farmer[2]}"
+        )
+
+        st.write(
+            f"🏡 Village: {farmer[3]}"
+        )
+
+        st.write(
+            f"🌾 Crop: {farmer[4]}"
+        )
 
         st.markdown("---")
 
