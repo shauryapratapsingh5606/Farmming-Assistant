@@ -320,10 +320,10 @@ if st.button("Register Farmer"):
 
         st.write(f"👨‍🌾 Name: {farmer[1]}")
         st.write(f"📱 Mobile: {farmer[2]}")
-            st.write(f"🏡 Village: {farmer[3]}")
-            st.write(f"🌾 Crop: {farmer[4]}")
+        st.write(f"🏡 Village: {farmer[3]}")
+        st.write(f"🌾 Crop: {farmer[4]}")
 
-            st.markdown("---")
+        st.markdown("---")
 
 # =========================================
 # DISEASE PAGE
