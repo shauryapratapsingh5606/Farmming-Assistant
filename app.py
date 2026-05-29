@@ -304,23 +304,22 @@ if st.button("Register Farmer"):
             image_name
         )
     )
-
     conn.commit()
 
     st.success("Farmer Registered Successfully ✅")
 
-        st.markdown("---")
+    st.markdown("---")
 
-        st.subheader("📋 Registered Farmers")
+    st.subheader("📋 Registered Farmers")
 
-        cursor.execute("SELECT * FROM farmers")
+    cursor.execute("SELECT * FROM farmers")
 
-        farmers_data = cursor.fetchall()
+    farmers_data = cursor.fetchall()
 
-        for farmer in farmers_data:
+    for farmer in farmers_data:
 
-            st.write(f"👨‍🌾 Name: {farmer[1]}")
-            st.write(f"📱 Mobile: {farmer[2]}")
+        st.write(f"👨‍🌾 Name: {farmer[1]}")
+        st.write(f"📱 Mobile: {farmer[2]}")
             st.write(f"🏡 Village: {farmer[3]}")
             st.write(f"🌾 Crop: {farmer[4]}")
 
