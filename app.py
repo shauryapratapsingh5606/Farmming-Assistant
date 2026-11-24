@@ -176,6 +176,7 @@ if page == labels[language]["home"]:
     # WEATHER
 
     st.header(labels[language]["weather"])
+    location = streamlit_geolocation()
 
     city = st.selectbox(
         labels[language]["city"],
