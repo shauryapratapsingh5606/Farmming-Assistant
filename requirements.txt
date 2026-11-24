@@ -3,3 +3,4 @@ pillow
 streamlit-mic-recorder
 google-generativeai
 geocoder
+streamlit-geolocation
