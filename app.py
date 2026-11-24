@@ -2,6 +2,7 @@ import streamlit as st
 import requests
 import sqlite3
 import os
+from streamlit_geolocation import streamlit_geolocation
 
 # =========================================
 # PAGE CONFIG
