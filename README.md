@@ -1,2 +1,2 @@
 # Farmming-Assistant
-AI Farming Assistant for Crop Disease Detection
+AI Farmming Assistant for Crop Disease Detection
